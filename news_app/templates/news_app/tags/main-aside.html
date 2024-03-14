@@ -1,0 +1,44 @@
+{% load static %}
+
+
+  <aside class="main-aside">
+
+    <div class="aside-box">
+      <img src="{% static 'news_app/img/ad-vertical.jpg' %}" alt="alt" class="img-responsive">
+    </div>
+
+
+    <div class="aside-box">
+
+      <div class="latest-box">
+        <div class="lb-header">Последние статьи:</div>
+
+        <div class="lb-list">
+
+
+          {% for post in lst %}
+            <div class="lb-item">
+              <a href="{{ post.category.get_absolute_url }}" class="lb-catname">{{ post.category.name}}</a>
+              <div class="lb-body">
+                <a href="{{ post.get_absolute_url }}" class="lb-item-header">{{ post.short}}</a>
+                <div class="lb-footer">
+                  <div class="item-comments" title="Количество коментариев">
+                    <i class="fa fa-comments"></i><a href="{{ post.get_absolute_url }}#discus-thread" class="item-comments-count"></a>
+                    <span class="date">{{ post.time_create|date:"d/m/Y"}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+
+        </div>
+
+      </div>
+
+	  </div>
+
+    <div class="aside-box">
+      <img src="{% static 'news_app/img/vk-witget.jpg' %}" alt="alt" class="img-responsive">
+    </div>
+
+  </aside>

@@ -1,0 +1,65 @@
+{% extends 'news_app/base.html' %}
+
+{% load static %}
+
+{% block title %}Все статьи.{% endblock title %}
+
+{% block content %}
+
+	<div class="cat-list-first">
+		<div class="container-fluid">
+
+			<div class="ad top-ad">
+				<img src="{% static 'news_app/img/ad-horizontal.jpg' %}" alt="alt" class="img-responsive">
+			</div>
+			
+
+		</div>
+	</div>
+
+	<div class="cat-list">
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="col-md-8">
+
+					<div class="all-posts-header">Все статьи:</div>
+
+					<div class="cat-list-wrap">
+
+					{% for post in page_obj %}
+						<a href="{{ post.get_absolute_url }}" class="cat-list-item">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="pattern">
+											<img src="{{ post.image.url }}" alt="" class="img-responsive overlay">
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<h3>{{ post.header }}</h3>
+										<div class="date">{{ post.time_create|date:"d/m/Y" }}</div>
+										{{ post.article | truncatewords:15 | safe }}
+									</div>
+								</div>
+							</a>
+						{% endfor %}
+
+					</div>
+
+          {#    пагинация на мобильных устройствах      #}
+          {% include 'news_app/include/pagination.html' %}
+
+				</div>
+
+				<div class="col-md-4">
+					{% include 'news_app/tags/main-aside.html' %}
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+
+{% endblock %}

@@ -1,0 +1,1039 @@
+.visually-hidden
+	position: absolute
+	width: 1px
+	height: 1px
+	margin: -1px
+	border: 0
+	padding: 0
+	white-space: nowrap
+	clip-path: inset(100%)
+	clip: rect(0 0 0 0)
+	overflow: hidden
+	
+.top-line
+	background-color: $dark
+	position: relative
+	height: 65px
+
+.logo
+	font-family: baron-g, sans-serif
+	color: #fff
+	font-size: 23px
+	// чтобы блок не занимал всю ширину
+	display: inline-block
+	text-decoration: none
+	position: absolute
+	padding-left: 30px
+	left: 0
+	// центрируем логотип с помощю line-height равного высоте родительского элемента
+	line-height: 65px
+	&:hover, &:focus
+		// text-decoration: none
+		color: #fff
+	span
+		color: $accent
+	@include media-breakpoint-down(sm)
+		font-size: 19px
+		padding-left: calc($gutter/2)
+
+.main-menu
+	// делаем по бокам 100px чтобы на мобильных устройствах ничего не мешало
+	padding: 0 100px
+	width: 100%
+	text-align: center
+	ul, li
+		// сбрасываем стили таблиц
+		list-style-type: none
+		padding: 0
+		margin: 0
+	li
+		// блоки в линию, друг за другом
+		display: inline-block
+		// в блоках меню необходимо устанавливать отрицательный маргин,
+		// чтобы при наведении курсора небыло растояния между блоками
+		margin-right: -4px
+		&.active
+			color: #fff
+			background-color: lighten($dark, 5%)
+			text-decoration: none
+			text-transform: uppercase
+			font-size: 16px
+			font-weight: bold
+			padding: 0 15px
+			line-height: 65px
+		&:hover
+			a
+				color: #fff
+				background-color: lighten($dark, 8%)
+	a
+		color: #d1d9e0
+		text-decoration: none
+		text-transform: uppercase
+		font-size: 16px
+		font-weight: bold
+		padding: 0 15px
+		line-height: 65px
+		// указываем ссылкам меню параметр display: block чтобы ссылка занимала всю высоту шапки
+		display: block
+		transition: color .25s ease, background-color .25s ease
+	@include media-breakpoint-down(lg)
+		display: none
+		padding: 20px
+
+.search-wrap
+	.search
+		position: absolute
+		padding: 
+			right: 30px
+			left: 10px
+		right: 0
+		color: #5c6470
+		cursor: pointer
+		line-height: 65px
+		text-align: center
+		transition: color .25s ease
+		&:hover
+			color: lighten(#5c6470, 10%)
+		@include media-breakpoint-down(sm)
+			padding-right: calc($gutter/2)
+	.search-field
+		position: absolute
+		left: 0
+		top: 64px
+		padding: 15px
+		background-color: lighten($dark, 3%)
+		width: 100%
+		text-align: center
+		border-top: 1px solid lighten($dark, 10%)
+		z-index: 4
+		display: none
+		input[type=text]
+			width: 100%
+			padding: 8px 15px
+			border: 1px solid lighten($dark, 10%)
+			border-radius: 5px
+			background-color: lighten($dark, 7.5%)
+			font-size: 16px
+			color: #fff
+			// убирает рамку на мобильных устройствах
+			outline: none
+			&:focus-visible
+				border-color: lighten($dark, 15%)
+			&::placeholder
+				// в поисковых формах использовать только шрифт arial
+				color: rgba(#fff, .25)
+				font-family: arial, sans-serif
+				font-style: italic
+
+.mobile-menu-button
+	color: #fff
+	text-align: center
+	cursor: pointer
+	line-height: 65px
+	font-size: 17px
+	text-transform: uppercase
+	font-weight: bold
+	// отменяет переносы строк
+	white-space: nowrap
+	display: none
+	&:hover
+		color: $accent
+	@include media-breakpoint-down(lg)
+		display: block
+		
+.mobile-menu
+	// display: none
+	background-color: lighten($dark, 3%)
+	border-top: lighten($dark, 3%) solid 1px
+	.top-menu
+		display: block
+	li
+		display: block
+		a
+			padding: 0
+			line-height: 45px
+
+// стилизация блоков рекламы
+.ad
+	text-align: center
+	width: 100%
+	display: block
+	overflow: hidden
+
+.top-ad
+	padding-bottom: $gutter
+	@include media-breakpoint-down(md)
+		padding-bottom: calc($gutter/2)
+
+.container-fluid
+	max-width: 1346px
+	padding: 0 $gutter
+	@include media-breakpoint-down(md)
+		padding: 0 calc($gutter/2)
+
+section
+	background-color: #fafafa
+	padding:
+		top: $gutter
+		bottom: $gutter
+	h2
+		text-transform: uppercase
+		margin: 0
+		font-size: 23px
+		font-weight: 900
+
+//                                             first section (electronics items)
+.first-section
+	@include media-breakpoint-down(md)
+		padding-top: calc($gutter/2)
+		padding-bottom: calc($gutter/2)
+
+.item-title
+	min-height: 340px
+	&-content
+		position: absolute
+		bottom: 0
+		color: #fff
+		padding: 40px
+		z-index: 1
+		a
+			color: #fff
+		h3
+			margin: 0
+			text-transform: uppercase
+			font-weight: 900
+			font-size: 19px
+			max-width: 450px
+		a
+			color: #fff
+			text-decoration: none
+			&:hover
+				text-decoration: underline
+	@include media-breakpoint-down(lg)
+		&-content
+			padding: 40px 30px
+
+// на sm разрешении сделаем растояния между итемами
+
+.g-0
+	.pattern
+		@include media-breakpoint-down(sm)
+			margin-bottom: calc($gutter/2)
+
+.pattern
+	background-color: $dark
+	position: relative
+	display: block
+	&::before
+		content: ''
+		transition: opacity .25s ease, top .25s ease, left .25s ease, bottom .25s ease, right .25s ease
+		z-index: 1
+		position: absolute
+		border: 1px solid #fff
+		inset: 0
+		opacity: 0
+	&:hover
+		&::before
+			opacity: 0.5
+			top: 10px
+			right: 10px
+			bottom: 10px
+			left: 10px
+		.overlay
+			&::before
+				opacity: 0.75
+
+	&-cat-header
+		&::before
+			display: none
+
+.overlay
+	// центрирует бг
+	background-size: cover
+	background-position: center
+	position: relative
+	display: block
+	&::before
+		content: ''
+		background-color: $dark
+		position: absolute
+		inset: 0
+		opacity: 0.55
+		transition: opacity .25s ease
+	&:hover
+		&::before
+			opacity: 0.75
+
+.item-social
+	margin-top: 10px
+	.fa
+		font-size: 12px
+		margin-right: 5px
+
+.item-comments
+	display: inline-block
+	margin-right: 20px
+	&-count
+		font-size: 12px
+		display: inline-block
+		position: relative
+		&::after
+			content: "\f111"
+			font-family: font-g
+			font-size: 5px
+			top: 40%
+			margin-left: 10px
+			margin-right: 10px
+			position: absolute
+			opacity: .25
+
+.likely-custom
+	padding-left: 0px
+	margin-top: 15px
+	@include media-breakpoint-down(xl)
+		margin-top: 20px
+
+.likely .likely__widget
+	height: 25px
+	margin-left: 8px
+	padding-left: 8px
+	padding-right: 10px
+	padding-bottom: 10px
+	background: inherit
+	position: relative
+	top: -15px
+	font-size: 12px
+	color: #fff
+	border: 1px solid #f8f8f8
+	border-radius: 3px
+	.likely__counter
+		display: none
+
+.fa-share-alt
+	padding-right: 5px
+
+
+.likely
+	top: 10px
+	margin-left: -7px
+	svg
+		fill: #fff
+		width: 11px
+		height: auto
+		position: absolute
+		top: 5.5px
+		left: 4px
+	
+//                                            second section (news items, asidebox)
+
+.second-section
+	padding: calc($gutter/2) 0
+	@include media-breakpoint-down(lg)
+		padding: calc($gutter/2) 0
+
+.news-wrap
+	padding-bottom: calc($gutter/2)
+	.pattern
+		&::before
+			display: none
+	.overlay
+		&::before
+			opacity: 0.4
+
+.item-news
+	min-height: 280px
+	margin: calc($gutter/2) 0
+	color: $text-color
+	&-content
+		border:
+			left: #dfdfdf 1px solid
+			bottom: #dfdfdf 1px solid
+		z-index: 1
+		position: absolute
+		bottom: 0
+		background-color: #fff
+		width: 80%
+		padding: $gutter
+		h3
+			font-size: 17px
+			font-weight: 900
+			line-height: 1.2
+			margin: 0
+	&:hover
+		h3
+			text-decoration: underline
+	@include media-breakpoint-down(md)
+		margin: calc($gutter/2) 0 0
+
+.date                        //date
+	font-size: 13px
+	color: $accent
+	font-family: baron-g, sans-serif
+	font-weight: 900
+
+//                                         third section (reviews)
+
+.aside-box                   //aside-box
+	margin-bottom: $gutter
+	text-align: center
+	.img-responsive
+		display: inline-block
+
+.third-section
+	// не работает
+	@include media-breakpoint-down(sm)
+		padding: $gutter 0 30px
+		> div > div > div:last-of-type
+			.col-item
+				border: 0
+				padding-bottom: 0
+				margin-bottom: 0
+
+.dark-section
+	margin-top: 30px
+	padding: $gutter*1.5 0
+	background-color: $dark
+	@include media-breakpoint-down(lg)
+		padding: $gutter*1.5 0 30px
+	h2
+		padding-left: 8px
+		padding-bottom: 5px
+		a
+			color: #fff
+
+.col-item
+	margin: 15px 0px 20px
+	a
+		img
+			@include media-breakpoint-down(lg)
+				margin-bottom: calc($gutter/2)
+		text-decoration: none
+		transition: color .25s ease
+		// так как изображение айтема является ссылкой, но в айтеме существует ещё ссылка с количеством отзывов
+		// ссылка с названием статьи, мы не можем при :hover на изображение подчеркнуть текст заголовка.
+		// при клике на изображение с помощю js добавим класс .hover заголовку
+		&:hover, &.hover
+			text-decoration: underline
+	.item-comments
+		margin-top: 2px
+		.fa, .item-comments-count
+			color: #49505a
+		.fa
+			font-size: 12px
+			margin: 
+				left: 20px
+				right: 5px
+		.item-comments-count
+			&::after
+				left: -40px
+				opacity: 1
+			&:hover
+				color: #49505a
+		.date
+			display: inline-block
+			margin-top: 0
+	h4
+		font-size: 15px
+		font-weight: normal
+		margin: 0
+		line-height: 1.35
+		@include media-breakpoint-down(lg)
+			padding: 0 $gutter
+	.col-item-meta
+		margin: 
+			top: 6px
+			bottom: 8px
+		@include media-breakpoint-down(lg)
+			padding: 0 $gutter
+			margin-bottom: 5px
+	&.col-item-dark
+		a
+			color: #a4a7ab
+			&:hover, &.hover
+				color: #fff
+	@include media-breakpoint-down(md)
+		margin-bottom: $gutter
+		padding-bottom: $gutter
+		border-bottom: 1px solid rgba(#fff, 0.1)
+
+//                                 fourth-section (lifehacks)
+
+.fourth-section
+	background-color: #f5f5f5
+	padding-top: 30px
+	&-header
+		margin-bottom: 15px
+		@include media-breakpoint-down(sm)
+			margin-bottom: 10px
+	.item-title
+		min-height: 300px
+		.date
+			margin-left: 20px
+			color: #fff
+	.item-social
+		margin-top: 1px
+	@include media-breakpoint-down(sm)
+		padding: calc($gutter/1.5) 0
+
+//                                      section type one
+
+.type-one
+	&-header
+		margin-bottom: calc($gutter/2)
+	&-first
+		> div
+			> a
+				display: block
+				background-color: $dark
+		.item-social
+			margin-top: 8px
+			a, .tiem-comments, .date, .fa
+				color: #a0a0a0
+				font-size: 13px
+			.item-comments-count
+				font-size: 12px
+			.date
+				margin-left: 20px
+		h3
+			font-size: 20px
+			text-transform: uppercase
+			font-weight: 800
+			margin-top: 8px
+			line-height: 1.2
+			margin-bottom: 30px
+			a
+				color: $text-color
+				display: block
+				text-decoration: none
+			&:hover
+				a
+					color: $accent
+	.pattern
+		margin-bottom: $gutter
+		@include media-breakpoint-down(md)
+			margin-bottom: calc($gutter/2)
+
+.item-title-white
+	.date
+		color: #fff
+		font-size: 13px
+		margin-left: 20px
+	.item-comments-count
+		font-size: 12px
+	.item-social
+		margin-top: 0
+	.item-title
+		min-height: 230px
+		&-content
+			padding: 40px 40px 25px
+
+//                              button
+
+
+		
+.s_more
+	padding: $gutter*2 0
+	background-color: #f5f5f5
+
+.main-footer
+	background-color: $dark-blue
+	padding: 25px 0
+	border-bottom: 1px solid rgba(#fff, .1)
+
+.bottom-footer
+	background-color: $dark-blue
+	padding: 25px 0 35px
+	.logo-footer
+		display: inline-block
+	p
+		color: rgba(#fff, .2)
+		font-size: 12px
+		margin: 5px
+	.footer-copy
+		color: rgba(#fff, .2)
+		font-size: 13px
+		font-family: baron-g, sans-serif
+		text-transform: uppercase
+		.logo-footer
+			position: relative
+			font-size: 13px
+			padding-left: 0
+			line-height: 13px
+			color: rgba(#fff, .2)
+			span
+				opacity: .9
+
+.footer-menu
+	li
+		&.active
+			text-decoration: underline
+			background: none
+		a
+			font-size: 15px
+			padding: 0 10px
+			&:hover
+				text-decoration: underline
+				background: none
+
+nav.soc
+	padding: 15px 0 20
+	ul, li
+		margin: 0
+		padding: 0
+		list-style-type: none
+	li
+		display: inline-block
+		a
+			display: block
+			text-align: center
+			border: 1px solid rgba(#fff, .08)
+			border-radius: 10em
+			width: 52px
+			height: 52px
+			line-height: 50px
+			font-size: 24px
+			margin: 4px
+			color: #fff
+			transition: border-color .25s ease, opacity .25s ease
+			.fa
+				transition: opasity .25s ease
+				opacity: .75
+			&:hover
+				border-color: rgba(#fff, .35)
+				.fa
+					opacity: 1
+	@include media-breakpoint-down(sm)
+		padding: 10px 0 0
+		li
+			a
+				width: 40px
+				height: 40px
+				font-size: 18px
+				line-height: 38px
+				margin: 3px
+
+//                                              category page
+
+.cat-header
+	background-size: cover
+	background-position: center
+	position: relative
+	&::before
+		content: ''
+		opacity: 0.25
+		background-color: #000
+		position: absolute
+		top: 0
+		left: 0
+		right: 0
+		bottom: 0
+	&-block
+		position: relative
+		padding: 100px 80px 100px
+		color: #fff
+		background-color: rgba($dark, .8)
+		&::before
+			content: ''
+			border: 1px solid #fff
+			opacity: 0.2
+			position: absolute
+			top: 10px
+			left: 10px
+			right: 10px
+			bottom: 10px
+			transition: opacity .25s ease, top .25s ease, left .25s ease, right .25s ease, bottom .25s ease
+			z-index: 1
+		@include media-breakpoint-down(md)
+			padding: 50px
+			max-width: 80vw
+			
+			
+		p, h1, h2
+			margin: 0
+		h1, h2
+			font-size: 30px
+			text-transform: uppercase
+			margin-bottom: 15px
+			@include media-breakpoint-down(md)
+				font-size: 26px
+	&.overlay
+		&:hover
+			&::before
+				opacity: 0.4
+
+//                                      category .cat-list-first
+.cat-list-first
+	padding-top: $gutter
+	background-color: #f5f5f5
+
+.type-one-cat
+	background-color: transparent
+	padding-top: calc($gutter/2)
+	
+
+.cat-list
+	padding-top: $gutter
+	background-color: #fff
+	@include media-breakpoint-down(md)
+		padding-top: 0
+
+
+a.cat-list-item
+	color: $text-color
+	display: block
+	text-decoration: none
+	margin:
+		bottom: calc($gutter/1.5)
+		top: calc($gutter/1.5)
+	padding-bottom: 4px
+	border-bottom: 1px solid #dfdfdf
+	h2, h3
+		transition: color .25s ease
+		line-height: 1.2
+		font-size: 21px
+		font-weight: 800
+		margin-bottom: 3px
+	img
+		transition: opacity .25s easee
+		margin-bottom: 12px
+	p
+		font-size: 15.4px
+		margin-top: 10px
+	&:hover
+		h2, h3
+			color: $accent
+			text-decoration: underline
+		img
+			opacity: 0.75
+		.pattern
+			&::before
+				inset: 10px
+				opacity: 0.4
+	&:last-child
+		border-bottom: none
+
+.main-aside
+	margin-bottom: $gutter
+
+.lb-header
+	border-bottom: 2px solid $accent
+	padding-bottom: 5px
+
+.lb-header, .all-posts-header
+	font-size: 21px
+	text-align: left
+	font-weight: 800
+	margin: 0
+
+.all-posts-header
+	text-transform: uppercase
+	@include media-breakpoint-down(md)
+		margin-top: calc($gutter/2)
+
+.lb-item
+	position: relative
+	padding-left: 120px
+	background-color: #f0f0f0
+	margin-bottom: 2px
+	transition: background-color .25s ease
+	text-align: start
+	&:hover
+		background-color: $accent
+		.lb-catname
+			color: #fff
+	.lb-body
+		background-color: #f9f9f9
+		padding: 10px 15px
+		a
+			color: $text-color
+			transition: color .25s ease
+			&:hover
+				color: $accent
+	&-header
+		font-size: 14px
+		//                 может не премениться если элемент не блочный
+		line-height: 1.4
+		display: block
+		font-weight: 500
+	.date
+		display: inline-block
+		margin-left: 20px
+		color: #aaa
+		margin-top: 0
+	.item-comments
+		.fa
+			font-size: 12px
+			margin-right: 5px
+			color: #aaa
+		.items-comments-count
+			color: #aaa
+			&:hover
+				color: $accent
+				&::after
+					color: #aaa
+
+.lb-catname
+	position: absolute
+	left: 15px
+	top: 15px
+	transition: color .25s ease
+	color: #888
+	font-size: 14px
+	font-weight: 800
+	max-width: 90px
+	text-decoration: none
+	&:hover
+		text-decoration: underline
+	&:focus
+		color: #888
+
+.lb-footer
+	line-height: 1.2
+
+.pagination-section
+	padding: calc($gutter*2) 0
+	background-color: #f5f5f5
+	&-first
+		padding: $gutter 0
+		background: none
+		margin-bottom: $gutter
+		border-bottom: 1px solid #dfdfdf
+
+.pagination
+	padding-top: 12px
+	a, span
+		display: inline-block
+		margin-top: 5px
+		width: 42px
+		height: 42px
+		line-height: 40px
+		border: 2px solid #e5e5e5
+		border-radius: 10em
+		text-decoration: none
+		font-size: 18px
+		font-weight: 800
+		color: #666
+		transition: border-color .25s ease, color .25s ease
+	a
+		&:hover
+			border-color: $accent
+			color: $accent
+		&.pagination-left, &.pagination-right
+			color: $accent
+	span
+		// чтобы активная ссылка не дублировалась на саму себя она будет span (основы внутренней seo оптимизации)
+		&.active
+			border-color: $accent
+			color: $accent
+	.pagination-left, .pagination-right
+		border: none
+		font-size: 32px
+		width: 30px
+
+.cat-list-item:last-child
+	margin-bottom: 0
+	padding-bottom: 0
+
+//                                     page.html
+
+.page-header
+	&.overlay
+		&::before
+			opacity: 1
+			background-color: transparent
+			background-image: linear-gradient(rgba(#000, .2), rgba(#000, .7))
+	height: 80vh
+	min-height: 460px
+	color: #ffffff
+	position: relative
+	@include media-breakpoint-down(sm)
+		// min-height: 360px
+	
+.ispage
+	.top-line
+		position: absolute
+		z-index: 1
+		width: 100%
+	.top-menu
+		@include media-breakpoint-down(lg)
+			position: relative
+			top: 65px
+
+.page-header
+	&.overlay::before
+		@include media-breakpoint-down(sm)
+			background-image: linear-gradient(rgba(#000, .3), rgba(#000, .75))
+	&-content
+		position: absolute
+		// чтобы внутри класса применялся container-fluid бутстрапа
+		width: 100%
+		bottom: 15%
+		@include media-breakpoint-down(sm)
+			bottom: 10%
+	&-meta
+		// * выбираем всех потомков
+		> *
+			display: inline-block
+		.date
+			color: #fff
+			font-size: 15px
+		h1
+			font-size: 32px
+			line-height: 1.2
+			margin: 15px 0
+			display: inline-block
+			@include media-breakpoint-down(sm)
+				font-size: 24px
+				margin: 10px 0 0
+		.item-social
+			@include media-breakpoint-down(sm)
+				padding-bottom: 5px
+		.item-comments-count
+			color: #fff
+	.fa-share-alt
+		&::before
+			position: relative
+			top: 3px
+
+.page-category-link
+	font-size: 14px
+	text-transform: uppercase
+	color: #fff
+	background-color: $accent
+	padding: 1px 6px
+	text-decoration: none
+	font-weight: 800
+	margin-right: 5px
+	&:hover, &:focus-visible
+		color: #fff
+		text-decoration: none
+			
+.article-content
+	padding: calc($gutter*1.8) 0
+	background-color: #fff
+
+.article-top-ad
+	margin: $gutter 0
+
+.breadcrumbs
+	margin-bottom: 15px
+	margin-left: -10px
+	ul, li
+		margin: 0
+		padding: 0
+		list-style-type: none
+	li
+		display: inline-block
+		font-size: 16px
+		a
+			display: inline-block
+			padding: 0 10px
+			position: relative
+			&::after
+				content: '»'
+				position: absolute
+				right: -6px
+				color: #ccc
+		&.active
+			padding-left: 10px
+			color: #888
+
+.article-body
+	p
+		margin: 25px 0
+		line-height: 1.6
+	img
+		display: block
+		max-width: 100%
+		height: auto
+		margin: auto
+	h2, h3, h4, h5, h6
+		line-height: 1.2
+	blockquote
+		padding: $gutter
+		margin: calc($gutter*2) calc($gutter*2.5)
+		font-size: 20px
+		color: #000
+		border:
+			top: $accent 2px solid
+			bottom: $accent 2px solid
+		@include media-breakpoint-down(sm)
+			margin: 0
+	ul, ol
+		padding-left: $gutter
+		li
+			margin: 10px 0
+	.video
+		margin: $gutter 0
+
+.video
+	position: relative
+	padding-bottom: 56.25%
+	padding-top: 25px
+	height: 0
+	iframe
+		border: none
+		position: absolute
+		top: 0
+		left: 0
+		width: 100%!important
+		height: 100%!important
+
+//                                      likely on page   start
+.likely-on-page
+	
+	.likely
+		.likely__widget
+			border: 1px solid rgba(#000, .2)
+			transition: border .1s ease
+			&:hover, &:focus
+				border: 1px solid inherit
+				span.likely__button, span.lokely__counter
+					background-color: transparent
+					color: #fff
+				.likely__icon
+					svg
+						fill: #fff
+
+		.likely__icon
+			svg
+				fill: #777
+				transition: fill .1s ease
+		span.likely__button, span.lokely__counter
+			color: #333
+			transition: color .1s ease
+
+.read-more
+	margin-bottom: $gutter
+	&-header
+		font-size: 21px
+		font-weight: 800
+		margin: calc($gutter*1.5) 0 calc($gutter/2) 0
+	ul, li
+		margin: 0
+		padding: 0
+		list-style-type: none
+	a
+		line-height: 1.3
+		display: inline-block
+		color: #151515
+		transition: color .25s ease
+		margin: 8px 0
+		&:hover
+			color: $accent
+
+.comments
+	margin: $gutter 0
+//                                      likely on page   end
+//                                      about.html
+.header-about
+	text-align: center
+	h1, h2
+		font-family: baron-g, sans-serif
+		text-transform: lowercase
+	&::before
+		opacity: 1
+	.cat-header-block
+		background-color: rgba(#2c2f33, .8)
+		&::before
+			opacity: 0.12

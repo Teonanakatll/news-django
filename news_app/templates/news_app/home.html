@@ -1,0 +1,45 @@
+{% extends 'news_app/base.html' %}
+
+{% load static %}
+
+{% load news_tags %}
+
+	{% block body %}<body class="ishome">{% endblock body %}
+
+	{% block content %}
+
+
+
+
+		<!-- Clearfix — вспомогательный псевдоклас помогающий нам разрешать ситуации со схлопывающейся высотой
+			у родительского div'a когда внутри него расположенный плавающие элементы например с float:left. -->
+		<section class="first-section clearfix">
+			<!-- Bootstrap class .container-fluid для 100%-ной ширины -->
+			<div class="container-fluid">
+
+				<div class="ad top-ad">
+					<img src="{% static 'news_app/img/ad-horizontal.jpg' %}" alt="alt" class="img-responsive">
+				</div>
+
+				<!-- отключаем гаттеры бутстрапа -->
+				<div class="row g-0">
+
+					{% get_items_first_section first_category host %}
+
+				</div>
+
+			</div>
+		</section>
+
+    {%  get_items_second_section second_category %}
+
+    {% get_items_third_section third_category %}
+
+    {% get_items_fourth_section fourth_category %}
+
+		{% get_type_one_section random_cat_slug %}
+
+	{% include 'news_app/include/see-more-button.html' %}
+
+{% endblock %}
+

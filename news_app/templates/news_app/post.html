@@ -1,0 +1,124 @@
+{% extends 'news_app/base.html' %}
+
+{% load static %}
+
+{% load meta_tags %}
+
+{% load news_tags %}
+
+{% block meta_tags %}{% include_meta_tags post %}{% endblock %}
+
+{#{% block title %}{{ post.short }}{% endblock title %}#}
+
+{% block body %}<body class="ispage">{% endblock body %}
+
+
+
+{% block content %}
+
+<header class="page-header overlay" style="background-image: url({{ post.image.url }})">
+
+	<div class="page-header-content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-7 col-md-8">
+
+					<div class="page-header-meta">
+
+						<a href="{{ post.category.get_absolute_url }}" class="page-category-link">{{ post.category.name }}</a><span class="date">{{ post.time_create|date:"d/m/Y" }}</span>
+
+						<h1>{{ post.header }}</h1>
+						<div class="item-social">
+							<div class="item-comments" title="Количество коментариев">
+								<i class="fa fa-comments"></i><a href="http://{{ host }}{{ post.get_absolute_url }}#disqus_thread" class="item-comments-count"></a>
+							</div>
+						</div>
+
+						<div class="fa fa-share-alt" title="Поделиться в соц. сетях"></div>
+
+						<div class="likely likely-custom" data-image="{{ post.image.url }}" data-media="{{ post.image.url }}"
+							data-title="{{ post.header }}">
+							<div class="vkontakte" data-comment="{{ post.category.name }}" title="Поделиться Вконтакте">Вконтакте</div>
+							<div class="facebook" data-hashtag="#{{ post.category.name }}" title="Поделиться в Facebook">Facebook</div>
+							<div class="twitter" data-title="" data-hashtags="{{ post.category.name }}" data-related="GeekTOP.ru" title="Поделиться в Twitter">Twitter</div>
+						</div>
+
+
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</header>
+
+<div class="article-content">
+	<div class="container-fluid">
+		<div class="row">
+
+			<div class="col-md-8">
+
+				<!-- Для лучшей поисковой оптимизации используем html5 теги -->
+				<article class="main-article">
+					
+					<nav class="breadcrumbs">
+						<ul>
+							<li><a href="/">Главная</a></li>
+							<li><a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a></li>
+							<li class="active">Новые смартфоны покорили поклонников мобильной индустрии</li>
+						</ul>
+					</nav>
+
+					<div class="article-body">
+
+						<div class="ad article-top-ad">
+							<img src="{% static 'news_app/img/ad-horizontal.jpg' %}" alt="alt" class="img-responsive">
+						</div>
+
+
+						<h2 class="text-center" style="font-weight: 800">{{ post.short }}</h2>
+						{{ post.article | safe }}
+
+
+						<div class="likely-on-page">
+							<div class="likely likely-dark-theme" data-media="http://{{ host }}{{ post.image.url }}"
+							 data-image="http://{{ host }}{{ post.image.url }}" data-title="{{ post.header }}">
+								<div class="vkontakte" role="link" data-url="" title="Поделиться Вконтакте">Вконтакте</div>
+								<div class="facebook" title="Поделиться в Facebook">Facebook</div>
+								<div class="twitter" data-hashtags="{{ post.category.name }}" title="Поделиться в Twitter">Twitter</div>
+								<div class="odnoklassniki" title="Класснуть">Класснуть</div>
+							</div>
+						</div>
+
+
+
+						<div class="ad article-top-ad">
+							<img src="{% static 'news_app/img/ad-horizontal.jpg' %}" alt="alt" class="img-responsive">
+						</div>
+
+						{% read_more post.category.name %}
+
+						<div class="comments">
+							{% include 'news_app/include/disqus-comments.html' %}
+						</div>
+
+					</div>
+					
+
+				</article>
+
+			</div>
+
+      <div class="col-md-4">
+
+				{% get_main_aside category %}
+
+      </div>
+
+		</div>
+	</div>
+</div>
+
+{% endblock %}

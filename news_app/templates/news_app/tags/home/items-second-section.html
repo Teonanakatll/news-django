@@ -1,0 +1,54 @@
+{% load static %}
+
+
+
+	<section class="second-section">
+
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col-md-8">
+
+						<h2><a href="{{ category.get_absolute_url }}" title="Новости IT">{{ category.name }}</a></h2>
+
+						<div class="row news-wrap">
+
+							{% if message %}
+                {{ message }}
+              {% else %}
+                {% for post in col_4 %}
+                  <div class="col-md-6">
+                    <div class="pattern">
+                      <a href="{{ post.get_absolute_url }}" class="overlay item-news" style="background-image: url({{ post.image.url }})">
+                        <div class="item-news-content">
+
+                          <h3>{{ post.short }}</h3>
+                          <span class="date">{{ post.time_create|date:"d/m/Y" }}</span>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+
+
+						</div>
+
+					</div>
+
+					<div class="col-md-4">
+
+						<div class="aside-box">
+							<img src="{% static 'news_app/img/vk-witget.jpg' %}" alt="vk widget" class="img-responsive">
+						</div>
+
+						<div class="aside-box">
+							<img src="{% static 'news_app/img/ad-cube.jpg' %}" alt="reclama" class="img-responsive">
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</section>

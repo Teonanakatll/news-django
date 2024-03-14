@@ -1,0 +1,48 @@
+{% load static %}
+
+
+	<section class="third-section dark-section">
+
+			<div class="container-fluid">
+
+				<h2><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></h2>
+
+				<div class="row">
+
+					{% if message %}
+            {{ message }}
+          {% else %}
+            {% for post in col_3 %}
+              <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="col-item col-item-dark">
+                <!-- айтем будет в виде ссылки -->
+                <a href="{{ post.get_absolute_url }}">
+                  <img src="{{ post.image.url }}"
+                    alt="{{ post.short }}"
+                    style="max-height: 172px; width: auto;"
+                    class="img-responsive img-width overlay"
+                    title="{{ post.short }}">
+                </a>
+
+                <div class="col-item-meta">
+                  <div class="item-comments" title="Количество коментариев">
+                    <span class="date">{{ post.time_create|date:"d/m/Y" }}</span>
+
+                    <i class="fa fa-comments"></i>
+                    <a href="{{ post.get_absolute_url }}#disqus_thread" class="item-comments-count"></a>
+                  </div>
+                </div>
+                <h4><a href="{{ post.get_absolute_url }}">{{ post.short }}</a></h4>
+
+              </div>
+            </div>
+            {% endfor %}
+          {% endif %}
+
+				</div>
+
+			</div>
+
+		</section>
+
+

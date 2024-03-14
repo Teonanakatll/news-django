@@ -1,0 +1,70 @@
+{% if message %}
+	{{ message }}
+{% else %}
+	{% for post in col_6 %}
+		<div class="col-md-6">
+			<!-- рамка итема (:hover) -->
+			<div class="pattern">
+				<div class="overlay item-title" style="background-image: url({{ post.image.url }})">
+					<div class="item-title-content">
+
+						<h3><a href="{{ post.get_absolute_url }}">{{ post.short }}</a></h3>
+
+						<div class="item-social">
+							<div class="item-comments" title="Количество коментариев">
+								<i class="fa fa-comments"></i>
+								<a href="{{ post.get_absolute_url }}#disqus_thread" class="item-comments-count"></a>
+							</div>
+
+
+							<div class="fa fa-share-alt" title="Поделиться в соц. сетях"></div>
+
+							<div class="likely likely-custom" data-url="http://{{ host }}{{ post.get_absolute_url }}" data-media="{{ post.image.url }}"
+								data-title="{{ post.short }}">
+								<div class="vkontakte" data-comment="test" title="Поделиться Вконтакте">Вконтакте</div>
+								<div class="facebook" data-hashtag="#hello" title="Поделиться в Facebook">Facebook</div>
+								<div class="twitter" data-title="" data-hashtags="{{ post.category.name }}" data-related="geektop.ru" title="Поделиться в Twitter">Twitter</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+	{% if col_4 %}
+		{% for post in col_4 %}
+			<div class="col-md-4">
+	<!-- рамка итема (:hover) -->
+	<div class="pattern">
+		<div class="overlay item-title" style="background-image: url({{ post.image.url }})">
+			<div class="item-title-content">
+
+				<h3><a href="{{ post.get_absolute_url }}">{{ post.short }}</a></h3>
+
+				<div class="item-social">
+					<div class="item-comments" title="Количество коментариев">
+						<i class="fa fa-comments"></i><a href="{{ post.get_absolute_url }}#disqus_thread" class="item-comments-count"></a>
+					</div>
+
+
+					<div class="fa fa-share-alt" title="Поделиться в соц. сетях"></div>
+
+					<div class="likely likely-custom" data-url="http://{{ host }}{{ post.get_absolute_url }}"
+							 data-media="http://{{ host }}{{ post.image.url }}"
+							 data-image="http://{{ host }}{{ post.image.url }}"
+							 data-title="{{ post.header }}">
+						<div class="vkontakte" data-comment="test" title="Поделиться Вконтакте">Вконтакте</div>
+						<div class="facebook" data-hashtag="#hello" title="Поделиться в Facebook">Facebook</div>
+						<div class="twitter" data-title="" data-hashtags="hello,cats" data-related="@ilyabirman" title="Поделиться в Twitter">Twitter</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+		{% endfor %}
+	{% endif %}
+{% endif %}
+

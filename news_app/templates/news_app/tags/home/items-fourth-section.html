@@ -1,0 +1,52 @@
+{% load static %}
+
+	<section class="fourth-section">
+			<div class="container-fluid">
+				<div class="row">
+
+					<div class="col-sm-12">
+						<h2 class="fourth-section-header"><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></h2>
+					</div>
+
+					<div class="col-md-8">
+
+						<div class="row g-0">
+
+							{% if message %}
+                {{ message }}
+              {% else %}
+                {% for post in col_6 %}
+                  <div class="col-lg-6">
+                    <div class="pattern">
+                      <div class="overlay item-title" style="background-image: url({{ post.image.url }})">
+                        <div class="item-title-content">
+                          <h3><a href="{{ post.get_absolute_url }}">{{ post.short }}</a></h3>
+                          <div class="item-social">
+                            <div class="item-comments" title="Количество коментариев">
+                              <i class="fa fa-comment"></i><a href="{{ post.get_absolute_url }}#discus_thread" class="item-comments-count"></a>
+                              <span class="date">{{ post.time_create|date:"d/m/Y" }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endif %}
+
+
+						</div>
+
+					</div>
+
+					<div class="col-md-4 col-sm-6">
+
+						<div class="aside-box">
+							<img src="{% static 'news_app/img/ad-vertical.jpg' %}" alt="alt" class="img-responsive">
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</section>

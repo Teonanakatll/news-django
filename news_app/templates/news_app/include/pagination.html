@@ -1,0 +1,33 @@
+	{% if page_obj.has_other_pages %}
+		<!-- классы bootstrap display: none, display: block -->
+
+		<div class="pagination-section text-center d-md-none">
+
+			{% if page_obj.has_next %}
+				<a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="button">Следующая страница <i class="fa fa-angle-double-right"></i></a>
+			{% endif %}
+			<div class="pagination">
+				{% if page_obj.has_previous %}
+					<a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" class="pagination-left" title="Предыдущая страница">&laquo;</a>
+				{% else %}
+					<span class="pagination-left" title="Предыдущая страница">&laquo;</span>
+				{% endif %}
+
+				{% for p in page_obj.paginator.page_range %}
+					{% if page_obj.number == p %}
+					<span class="active">{{ p }}</span>
+					{% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+						<a href="{{ request.path }}?page={{ p }}">{{ p }}</a>
+					{% endif %}
+				{% endfor %}
+
+				{% if page_obj.has_next %}
+					<a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="pagination-right" title="Следующая страница">&raquo;</a>
+				{% else %}
+					<span class="pagination-right" title="Следующая страница">&raquo;</span>
+				{% endif %}
+			</div>
+
+
+			</div>
+	{% endif %}

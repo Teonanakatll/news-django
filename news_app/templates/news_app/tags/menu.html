@@ -1,0 +1,16 @@
+			<ul>
+				{% for m in menu %}
+						{% if m.pk == link_active %}
+{#							<li class="active"><a href="{{ m.get_absolute_url }}">{{ m.name }}</a></li>#}
+              <li class="active">{{ m.name }}</li>
+						{% else %}
+							<li><a href="{{ m.get_absolute_url }}">{{ m.name }}</a></li>
+						{% endif %}
+				{% endfor %}
+
+				{% if link_active == 99 %}
+					<li class="active">{{ about.name }}</li>
+				{% else %}
+					<li><a href="{% url 'about' %}">{{ about.name }}</a></li>
+				{% endif %}
+			</ul>

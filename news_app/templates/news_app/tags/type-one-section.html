@@ -1,0 +1,52 @@
+<section class="type-one">
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="col-sm-12">
+					<h2 class="type-one-header"><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></h2>
+				</div>
+
+				{% if message %}
+					{{ message }}
+				{% else %}
+					<div class="col-md-7">
+					<div class="type-one-first">
+						<a href="{{ big.get_absolute_url }}" title="{{ big.short }}">
+							<img src="{{ big.image.url }}"
+								alt="{{ big.short }}"
+								class="img-responsive img-width">
+						</a>
+						<div class="item-social">
+							<div class="item-comments" title="Количество коментариев">
+								<i class="fa fa-comments"></i><a href="{{ post.get_absolute_rul }}#disqus_thread" class="item-comments-count"></a>
+								<span class="date">{{ big.time_create|date:"d/m/Y" }}</span>
+							</div>
+						</div>
+						<h3><a href="{{ big.get_absolute_url }}">{{ big.short }}</a></h3>
+					</div>
+				</div>
+
+					<div class="col-md-5 item-title-white">
+						{% for post in small %}
+							<div class="pattern">
+								<div class="overlay item-title" style="background-image: url({{ post.image.url }})">
+									<div class="item-title-content">
+										<h3><a href="{{ post.get_absolute_url }}">{{ post.short }}</a></h3>
+										<div class="item-social">
+											<div class="item-comments">
+												<i class="fa fa-comments"></i>
+												<a href="{{ post.get_absolute_rul }}#disqus_thread" class="item-comments-count"></a>
+												<span class="date">{{ post.time_create|date:"d/m/Y" }}</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+
+				{% endif %}
+
+			</div>
+		</div>
+	</section>

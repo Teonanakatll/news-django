@@ -1,0 +1,10 @@
+<div class="read-more">
+  <div class="read-more-header">Читать ещё:</div>
+  <ul>
+
+    {% for link in links %}
+      <li><a href="{{ link.get_absolute_url }}">{{ link.short }}</a></li>
+    {% endfor %}
+
+  </ul>
+</div>

@@ -1,0 +1,83 @@
+{% extends 'news_app/base.html' %}
+
+{% load static %}
+
+{% load news_tags %}
+
+{% block title %}Категория: {{ cat.name }}{% endblock title %}
+
+{% block content %}
+
+	<div class="pattern pattern-cat-header">
+		<div class="cat-header overlay" style="background-image: url({{ cat.image.url }})">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-7">
+						<div class="cat-header-block">
+							<h1>{{ cat.name }}</h1>
+							<p>{{ cat.description }}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="cat-list-first">
+		<div class="container-fluid">
+
+			<div class="ad top-ad">
+				<img src="{% static 'news_app/img/ad-horizontal.jpg' %}" alt="alt" class="img-responsive">
+			</div>
+			
+			{% get_type_one_section random_cat %}
+
+		</div>
+	</div>
+
+	<div class="cat-list">
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="col-md-8">
+
+					<div class="cat-list-wrap">
+
+						{% for post in page_obj %}
+							<a href="{{ post.get_absolute_url }}" class="cat-list-item">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="pattern">
+											<img src="{{ post.image.url }}" alt="" class="img-responsive overlay">
+										</div>
+									</div>
+
+									<div class="col-sm-6">
+										<h3>{{ post.header }}</h3>
+										<div class="date">{{ post.time_create|date:"d/m/Y" }}</div>
+										{{ post.article | truncatewords:15 | safe }}
+									</div>
+								</div>
+							</a>
+						{% endfor %}
+
+					</div>
+
+          {#    пагинация на мобильных устройствах      #}
+          {% include 'news_app/include/pagination.html' %}
+
+				</div>
+
+
+			  <div class="col-md-4">
+
+          {% get_main_aside category %}
+
+        </div>
+
+
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
