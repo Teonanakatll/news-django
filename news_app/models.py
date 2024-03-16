@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 
 from django_ckeditor_5.fields import CKEditor5Field
+from taggit.managers import TaggableManager
+from unidecode import unidecode
 
 
 class Category(models.Model):
@@ -54,6 +56,7 @@ class Post(models.Model):
     slug = models.SlugField("url", unique=True, db_index=True)
     draft = models.BooleanField("Черновик", default=False)
     category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL, null=True)
+    tags = TaggableManager()
 
     def get_category_slug(self):
         category_slug = self.category.slug

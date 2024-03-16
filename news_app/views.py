@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from django.views.generic import ListView
+from taggit.models import Tag
 
 from news import settings
 from .models import Category, About, Post
 from django.shortcuts import get_object_or_404
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from random import randint
 
@@ -42,19 +43,25 @@ def category(request, cat_slug):
     link_active = cat.id
     posts = cat.post_set.all()
 
-    paginator = Paginator(posts, 2)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
-
     def get_random_category(num):
         while 1:
             rand = randint(1, num)
             if rand != cat.id:
                 return Category.objects.filter(draft=False)[rand - 1]
-                # return cats[rand - 1]
-
     random_cat = get_random_category(Category.objects.filter(draft=False).count())
+
+    paginator = Paginator(posts, 2)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    try:
+        page_obj = paginator.get_page(page_number)
+    # если указанная страница не является целым числом
+    except PageNotAnInteger:
+        page_obj = paginator.get_page(1)
+    # если указанный номер больше, чем всего страниц, возвращаем последнюю
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
 
     data = {
         'cat': cat,
@@ -74,14 +81,32 @@ def about(request):
     return render(request, 'news_app/about.html', {'link_active': link_active})
 
 
-def all_posts(request):
+def all_posts(request, tag_slug=None):
     posts = Post.objects.filter(draft=False).select_related('category')
+    tag = None
+
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tags__in=[tag])
+
     paginator = Paginator(posts, 5)
-
     page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    try:
+        page_obj = paginator.get_page(page_number)
+    # если указанная страница не является целым числом
+    except PageNotAnInteger:
+        page_obj = paginator.get_page(1)
+    # если указанный номер больше, чем всего страниц, возвращаем последнюю
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
 
-    return render(request, 'news_app/all-posts.html', {'page_obj': page_obj})
+    data = {
+        'page_obj': page_obj,
+        'tag': tag,
+    }
+
+    return render(request, 'news_app/all-posts.html', context=data)
+
 
 # @cache_page(60 * 2)
 def post(request, category_slug, post_slug):
@@ -91,6 +116,9 @@ def post(request, category_slug, post_slug):
 
     return render(request, 'news_app/post.html', {'post_category': post_category, 'post': post, 'host': host})
 
+
+def cloud(request):
+    return render(request, 'news_app/cloud.html')
 
 # def page_not_found_view(request, exception):
 #     return render(request, f'{settings.ERRORS_TEMPLATES_PATH}/404.html', status=404)

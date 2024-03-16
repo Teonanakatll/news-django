@@ -23,27 +23,32 @@
 
 				<div class="col-md-8">
 
-					<div class="all-posts-header">Все статьи:</div>
+          {% if tag %}
+            <div class="all-posts-header">Статьи по тегу :   <span> #{{ tag.name }}</span></div>
+          {% else %}
+					  <div class="all-posts-header">Все статьи:</div>
+          {% endif %}
+
 
 					<div class="cat-list-wrap">
 
-					{% for post in page_obj %}
-						<a href="{{ post.get_absolute_url }}" class="cat-list-item">
-								<div class="row">
-									<div class="col-sm-6">
-										<div class="pattern">
-											<img src="{{ post.image.url }}" alt="" class="img-responsive overlay">
-										</div>
-									</div>
+            {% for post in page_obj %}
+              <a href="{{ post.get_absolute_url }}" class="cat-list-item">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="pattern">
+                      <img src="{{ post.image.url }}" alt="" class="img-responsive overlay">
+                    </div>
+                  </div>
 
-									<div class="col-sm-6">
-										<h3>{{ post.header }}</h3>
-										<div class="date">{{ post.time_create|date:"d/m/Y" }}</div>
-										{{ post.article | truncatewords:15 | safe }}
-									</div>
-								</div>
-							</a>
-						{% endfor %}
+                  <div class="col-sm-6">
+                    <h3>{{ post.header }}</h3>
+                    <div class="date">{{ post.time_create|date:"d/m/Y" }}</div>
+                    {{ post.article | truncatewords:15 | safe }}
+                  </div>
+                </div>
+              </a>
+            {% endfor %}
 
 					</div>
 

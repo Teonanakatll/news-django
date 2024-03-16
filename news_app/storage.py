@@ -6,7 +6,7 @@ from django.conf import settings
 from django.core.files.storage import FileSystemStorage
 
 class CustomStorage(FileSystemStorage):
-    """Пользовательское хранилище для изображений"""
+    """Пользовательское хранилище для изображений ckeditor5"""
     date = datetime.now().strftime('%Y/%m/%d')
     location = os.path.join(settings.MEDIA_ROOT, f'uploads/{date}/')
     base_url = urljoin(settings.MEDIA_URL, f'uploads/{date}/')

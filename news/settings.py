@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'metatags',
     'django_ckeditor_5',
+    'taggit',
 
 ]
 
@@ -152,6 +153,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+# настройка для формирования слагов транслитом в taggit !!!!!!!!!!!!!!!
+TAGGIT_STRIP_UNICODE_WHEN_SLUGIFYING = True
 
 CACHES = {
     'default': {

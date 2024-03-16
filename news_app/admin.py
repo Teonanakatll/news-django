@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
+
 from .models import Category, About, Post, PostPhoto
 
 from metatags.admin import MetaTagInline
@@ -65,16 +66,32 @@ class AboutAdmin(admin.ModelAdmin):
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     """Статья"""
-    list_display = ("id", "category", "time_create", "get_image", "draft", "short")
+    list_display = ("id", "category", "time_create", "get_image", "draft", "short", "tag_list",)
+
+    # NOT WORKING
+    search_fields = ("category__name", "tag_list")
     list_display_links = ("category", "time_create", "short")
     list_editable = ("draft",)
     prepopulated_fields = {"slug": ("short",)}
-    readonly_fields = ("get_image",)
+    # tag_list не отображался пока не внёс в readonly_fields
+    readonly_fields = ("tag_list", "get_image")
 
     formfield_overrides = formfield_overrides
 
+    # fieldsets = (
+    #     (None, {
+    #         'fields': (("slug", "short", "tag_list", "tags"), )
+    #     }),
+    # )
+
     # инлайн классы, работают со связями ManyToMany и ForeignKey
-    inlines = [MetaTagInline, PostPhotoInline]
+    inlines = [MetaTagInline, PostPhotoInline,]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).prefetch_related('tags')
+
+    def tag_list(self, obj):
+        return u", ".join(o.name for o in obj.tags.all())
 
     def get_image(self, object):
         if object.image:
