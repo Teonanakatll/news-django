@@ -1,9 +1,9 @@
+from django.db.models import Count
 from django.shortcuts import render
-from django.views.generic import ListView
 from taggit.models import Tag
 
 from news import settings
-from .models import Category, About, Post
+from .models import Category, Post
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
@@ -48,6 +48,7 @@ def category(request, cat_slug):
             rand = randint(1, num)
             if rand != cat.id:
                 return Category.objects.filter(draft=False)[rand - 1]
+
     random_cat = get_random_category(Category.objects.filter(draft=False).count())
 
     paginator = Paginator(posts, 2)
@@ -90,6 +91,7 @@ def all_posts(request, tag_slug=None):
         posts = posts.filter(tags__in=[tag])
 
     paginator = Paginator(posts, 5)
+
     page_number = request.GET.get('page')
     try:
         page_obj = paginator.get_page(page_number)

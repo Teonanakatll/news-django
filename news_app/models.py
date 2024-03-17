@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from django_ckeditor_5.fields import CKEditor5Field
 from taggit.managers import TaggableManager
+from taggit.models import Tag
 from unidecode import unidecode
 
 

@@ -727,6 +727,8 @@ a.cat-list-item
 
 .all-posts-header
 	text-transform: uppercase
+	span
+		color: $accent
 	@include media-breakpoint-down(md)
 		margin-top: calc($gutter/2)
 
@@ -1024,6 +1026,20 @@ a.cat-list-item
 
 .comments
 	margin: $gutter 0
+
+.page-tags
+	span
+		font-weight: 800
+		font-size: 21px
+	a
+		text-decoration: none
+		text-transform: uppercase
+		font-weight: 800
+		color: #999
+		transform: color .25s ease
+		&:hover
+			color: $accent
+
 //                                      likely on page   end
 //                                      about.html
 .header-about

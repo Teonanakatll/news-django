@@ -5,12 +5,13 @@ from .views import home, category, about, all_posts, post, cloud
 
 from django.contrib.sitemaps.views import sitemap
 from django.views.decorators.cache import cache_page
-from .sitemap import PostSitemap, CategorySitemap, StaticSitemap
+from .sitemap import StaticSitemap, CategorySitemap, PostSitemap, TagSitemap
 
 sitemaps = {
-    'posts': PostSitemap,
-    'category': CategorySitemap,
     'static': StaticSitemap,
+    'category': CategorySitemap,
+    'tags': TagSitemap,
+    'posts': PostSitemap,
 }
 
 urlpatterns = [

@@ -1,11 +1,12 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
+from taggit.models import Tag
 
 from .models import Post, Category, About
 
 
 class CategorySitemap(Sitemap):
-    changefreq = 'weekly'
+    changefreq = 'daily'
     priority = 0.8
 
     def items(self):
@@ -25,10 +26,20 @@ class PostSitemap(Sitemap):
 
 class StaticSitemap(Sitemap):
     changefreq = 'daily'
-    priority = 0.7
+    priority = 1.0
 
     def items(self):
         return ['home', 'all_posts', 'about']
 
     def location(self, item):
         return reverse(item)
+
+class TagSitemap(Sitemap):
+    changefreq = 'daily'
+    priority = 0.7
+
+    def items(self):
+        return Tag.objects.all().order_by('slug')
+
+    def location(self, item):
+        return f'/news_app/{item.slug}/'

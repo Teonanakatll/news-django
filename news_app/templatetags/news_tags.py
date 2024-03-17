@@ -3,6 +3,9 @@ from django.core.cache import cache
 from django.views.decorators.cache import cache_page
 from django.shortcuts import get_object_or_404
 
+# taggit
+from collections import defaultdict, Counter
+
 from news_app.models import *
 
 register = template.Library()
@@ -27,6 +30,24 @@ def get_main_aside(cats):
 @register.inclusion_tag('news_app/tags/widgets/read-more.html')
 def read_more(name):
     links = Post.objects.filter(category__name=name, draft=False).reverse()[:5].select_related('category')
+
+    return locals()
+
+
+@register.inclusion_tag('news_app/tags/widgets/tags_cloud.html')
+def get_tags_cloud():
+    # # вместо исглючений добавляе дефолтные значения int, str, list
+    # tag_range = defaultdict(int)
+    # for item in Post.objects.all():
+    #     for tag in item.tags.all():
+    #         tag_range[tag.slug] += 1
+    # # collections.Counter() - возвращает словарь, в котором ключами служат индивидуальные элементы, а значениями
+    # # – количества повторений элемента в переданной последовательности.
+    # # в данном случае создаёт словарь где ключь: слаг тега, значение: кол-во
+    # Counter(tag_range).most_common()
+
+    # просто возвращает список отсортированный убыванию количества
+    tags = Post.tags.most_common()[:30]
 
     return locals()
 
