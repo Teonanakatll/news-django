@@ -1,6 +1,7 @@
 {% extends 'news_app/base.html' %}
 
 {% load static %}
+{% load thumbnail %}
 
 {% block title %}Все статьи.{% endblock title %}
 
@@ -33,11 +34,12 @@
 					<div class="cat-list-wrap">
 
             {% for post in page_obj %}
+              {% thumbnail post.image "422x272" crop="50%" quality=80 as im %}
               <a href="{{ post.get_absolute_url }}" class="cat-list-item">
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="pattern">
-                      <img src="{{ post.image.url }}" alt="" class="img-responsive overlay">
+                      <img src="{{ im.url }}" alt="" class="img-responsive overlay">
                     </div>
                   </div>
 
@@ -48,6 +50,7 @@
                   </div>
                 </div>
               </a>
+              {% endthumbnail %}
             {% endfor %}
 
 					</div>

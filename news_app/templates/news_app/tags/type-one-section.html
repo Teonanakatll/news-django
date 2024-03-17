@@ -9,11 +9,14 @@
 				{% if message %}
 					{{ message }}
 				{% else %}
+          {% load thumbnail %}
 					<div class="col-md-7">
 					<div class="type-one-first">
+            {% thumbnail big.image "753x411" crop="50%" quality=80 as im %}
 						<a href="{{ big.get_absolute_url }}" title="{{ big.short }}">
-							<img src="{{ big.image.url }}"
+							<img src="{{ im.url }}"
 								alt="{{ big.short }}"
+            {% endthumbnail %}
 								class="img-responsive img-width">
 						</a>
 						<div class="item-social">

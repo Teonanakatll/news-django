@@ -22,14 +22,15 @@ def get_main_aside(cats):
 
     lst = []
     for cat in cats:
-        lst.append(cat.post_set.filter(draft=False).select_related('category').last())
+        lst.append(cat.post_set.filter(draft=False).select_related('category').first())
 
     return locals()
 
 
 @register.inclusion_tag('news_app/tags/widgets/read-more.html')
-def read_more(name):
-    links = Post.objects.filter(category__name=name, draft=False).reverse()[:5].select_related('category')
+def read_more(category):
+    links = Post.objects.filter(category__name=category.name, draft=False)[:5].select_related('category')
+    category = category
 
     return locals()
 
@@ -54,7 +55,7 @@ def get_tags_cloud():
 
 @register.inclusion_tag('news_app/tags/home/items-first-section.html')
 def get_items_first_section(category, host):
-    lst = Post.objects.filter(category__slug=category.slug, draft=False).reverse()[:5].select_related('category')
+    lst = Post.objects.filter(category__slug=category.slug, draft=False)[:5].select_related('category')
     # lst = category.post_set.filter(draft=False).reverse()[:5]
 
     if len(lst) == 5:
@@ -71,7 +72,7 @@ def get_items_first_section(category, host):
 @register.inclusion_tag('news_app/tags/home/items-second-section.html')
 def get_items_second_section(category):
     # lst = category.post_set.filter(draft=False).reverse()[:4].select_related('category')
-    lst = Post.objects.filter(category__slug=category.slug, draft=False).reverse()[:4].select_related('category')
+    lst = Post.objects.filter(category__slug=category.slug, draft=False)[:4].select_related('category')
     if len(lst) > 1:
         col_4 = lst
     else:
@@ -84,7 +85,7 @@ def get_items_second_section(category):
 
 @register.inclusion_tag('news_app/tags/home/items-third-section.html')
 def get_items_third_section(category):
-    lst = category.post_set.filter(draft=False).reverse()[:4].select_related('category')
+    lst = category.post_set.filter(draft=False)[:4].select_related('category')
     # lst = Post.objects.filter(category__slug=category.slug, draft=False).reverse()[:4].select_related('category')
 
     if len(lst) > 1:
@@ -99,7 +100,7 @@ def get_items_third_section(category):
 
 @register.inclusion_tag('news_app/tags/home/items-fourth-section.html')
 def get_items_fourth_section(category):
-    lst = category.post_set.filter(draft=False).reverse()[:4].select_related('category')
+    lst = category.post_set.filter(draft=False)[:4].select_related('category')
     category = category
 
     if len(lst) > 1:
@@ -113,7 +114,7 @@ def get_items_fourth_section(category):
 @register.inclusion_tag('news_app/tags/type-one-section.html')
 def get_type_one_section(random_cat):
 
-    lst = random_cat.post_set.filter(draft=False).reverse()[:3].select_related('category')
+    lst = random_cat.post_set.filter(draft=False)[:3].select_related('category')
     category = random_cat
 
     if len(lst) > 2:

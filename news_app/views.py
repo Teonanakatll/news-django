@@ -118,10 +118,6 @@ def post(request, category_slug, post_slug):
 
     return render(request, 'news_app/post.html', {'post_category': post_category, 'post': post, 'host': host})
 
-
-def cloud(request):
-    return render(request, 'news_app/cloud.html')
-
 # def page_not_found_view(request, exception):
 #     return render(request, f'{settings.ERRORS_TEMPLATES_PATH}/404.html', status=404)
 

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'metatags',
     'django_ckeditor_5',
     'taggit',
+    'sorl.thumbnail',
 
 ]
 

@@ -72,7 +72,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = "Статья"
         verbose_name_plural = "Статьи"
-        ordering = ["id"]
+        ordering = ["-time_create"]
 
 
 class PostPhoto(models.Model):
