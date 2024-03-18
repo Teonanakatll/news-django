@@ -4,7 +4,8 @@ from django.urls import reverse
 from django_ckeditor_5.fields import CKEditor5Field
 from taggit.managers import TaggableManager
 from taggit.models import Tag
-from unidecode import unidecode
+
+from . django_fulltext_search import SearchManager
 
 
 class Category(models.Model):
@@ -46,7 +47,9 @@ class About(models.Model):
 
 class Post(models.Model):
     """Статья"""
-    #
+
+    # objects = SearchManager(['header', 'article'])
+
     header = models.CharField("Заголовок", max_length=350)
     short = models.CharField("Короткий заголовок", max_length=150, blank=True)
 
