@@ -1,0 +1,14 @@
+<div class="search-wrap search-bottom" style="display: block;">
+
+  <div class="search1" title="Подсказка при наведении, Поиск по сайту">
+    <div class="fa button button-search fa-search">
+      <span>продолжить поиск</span>
+    </div>
+  </div>
+
+  <div class="search-field1">
+    <form action="{% url 'search' %}" method="get" id="cse-search-box">
+      <input type="text" name="query" placeholder="Поиск по сайту..." >
+    </form>
+  </div>
+</div>

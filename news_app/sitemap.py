@@ -34,6 +34,16 @@ class StaticSitemap(Sitemap):
     def location(self, item):
         return reverse(item)
 
+class SearchSitemap(Sitemap):
+    changefreq = 'daily'
+    priority = 0,5
+
+    def items(self):
+        return ['search', 'search_list']
+
+    def location(self, item):
+        return reverse(item)
+
 class TagSitemap(Sitemap):
     changefreq = 'daily'
     priority = 0.7
@@ -42,4 +52,4 @@ class TagSitemap(Sitemap):
         return Tag.objects.all().order_by('slug')
 
     def location(self, item):
-        return f'/news_app/{item.slug}/'
+        return f'/tag/{item.slug}/'

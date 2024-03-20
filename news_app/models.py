@@ -48,7 +48,8 @@ class About(models.Model):
 class Post(models.Model):
     """Статья"""
 
-    # objects = SearchManager(['header', 'article'])
+    # Enable full-text search support for header and article fields.
+    objects = SearchManager(['header', 'article'])
 
     header = models.CharField("Заголовок", max_length=350)
     short = models.CharField("Короткий заголовок", max_length=150, blank=True)

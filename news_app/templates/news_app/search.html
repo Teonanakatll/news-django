@@ -1,9 +1,94 @@
-<div id="cse-search-results"></div>
-<script type="text/javascript">
-	var googleSearchIframeName = "cse-search-results";
-	var googleSearchFormName = "cse-search-box";
-	var googleSearchFrameWidth = 800;
-	var googleSearchDomain = "www.google.ru";
-	var googleSearchPath = "/cse";
-</script>
-<script type="text/javascript" src="https://www.google.com/afsonline/show_afs_search.js"></script>
+{% extends 'news_app/base.html' %}
+{% load news_tags %}
+{% load static %}
+{% load thumbnail %}
+
+{% block title %}{{ title }}{% endblock title %}
+
+{% block content %}
+
+	<div class="cat-list-first">
+		<div class="container-fluid">
+
+			<div class="ad top-ad">
+				<img src="{% static 'news_app/img/ad-horizontal.jpg' %}" alt="alt" class="img-responsive">
+			</div>
+
+
+		</div>
+	</div>
+
+	<div class="cat-list">
+		<div class="container-fluid">
+			<div class="row">
+
+				<div class="col-md-8">
+
+					<div class="cat-list-wrap">
+
+            {% if query %}
+              <div class="all-posts-header search-header mt-2 mb-3">
+                По вашему запросу   <span style="text-transform: none">{{ query }}</span>
+                найдено результатов : <span>{{ count }}</span>
+              </div>
+              <div class="search-border"></div>
+
+              {% for post in posts %}
+                {% thumbnail post.image "422x272" crop="50%" quality=80 as im %}
+                <a href="{{ post.get_absolute_url }}" class="cat-list-item">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="pattern">
+                        <img src="{{ im.url }}" alt="" class="img-responsive overlay">
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <h3>{{ post.short }}</h3>
+                      <div class="date">{{ post.time_create|date:"d/m/Y" }}</div>
+                      {{ post.article | truncatewords:15 | safe }}
+                    </div>
+                  </div>
+                </a>
+                {% endthumbnail %}
+              {% endfor %}
+
+              {% if search_list %}
+              <div class="s_more mr-5 text-center" style="margin-right: 30px; margin-bottom: 20px">
+                <div class="container">
+                  <a href="{% url 'search_list' search_list %}" class="button">смотреть все результаты...</a>
+                </div>
+              </div>
+            {% endif %}
+
+              {% include 'news_app/include/search_button.html' %}
+            {% else %}
+              <div class="all-posts-header search-header mt-2 mb-3">
+                  По вашему запросу результатов нет  :(
+              </div>
+              {% include 'news_app/include/search_button.html' %}
+            {% endif %}
+
+
+					</div>
+
+
+
+
+
+          {#    пагинация на мобильных устройствах      #}
+          {% include 'news_app/include/pagination.html' %}
+
+				</div>
+
+				<div class="col-md-4">
+					{% get_main_aside category %}
+				</div>
+
+			</div>
+		</div>
+
+
+	</div>
+
+{% endblock %}

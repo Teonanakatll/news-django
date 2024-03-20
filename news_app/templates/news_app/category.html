@@ -1,10 +1,10 @@
 {% extends 'news_app/base.html' %}
-
+{% block title %}Категория: {{ cat.name }}{% endblock title %}
 {% load static %}
 
 {% load news_tags %}
 
-{% block title %}Категория: {{ cat.name }}{% endblock title %}
+
 
 {% block content %}
 

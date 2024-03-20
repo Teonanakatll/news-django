@@ -28,25 +28,15 @@ def get_main_aside(cats):
 
 
 @register.inclusion_tag('news_app/tags/widgets/read-more.html')
-def read_more(category):
-    links = Post.objects.filter(category__name=category.name, draft=False)[:5].select_related('category')
-    category = category
+def read_more(cat):
+    links = Post.objects.filter(category__name=cat.name, draft=False)[:5].select_related('category')
+    category = cat
 
     return locals()
 
 
 @register.inclusion_tag('news_app/tags/widgets/tags_cloud.html')
 def get_tags_cloud():
-    # # вместо исглючений добавляе дефолтные значения int, str, list
-    # tag_range = defaultdict(int)
-    # for item in Post.objects.all():
-    #     for tag in item.tags.all():
-    #         tag_range[tag.slug] += 1
-    # # collections.Counter() - возвращает словарь, в котором ключами служат индивидуальные элементы, а значениями
-    # # – количества повторений элемента в переданной последовательности.
-    # # в данном случае создаёт словарь где ключь: слаг тега, значение: кол-во
-    # Counter(tag_range).most_common()
-
     # просто возвращает список отсортированный убыванию количества
     tags = Post.tags.most_common()[:30]
 
@@ -56,7 +46,6 @@ def get_tags_cloud():
 @register.inclusion_tag('news_app/tags/home/items-first-section.html')
 def get_items_first_section(category, host):
     lst = Post.objects.filter(category__slug=category.slug, draft=False)[:5].select_related('category')
-    # lst = category.post_set.filter(draft=False).reverse()[:5]
 
     if len(lst) == 5:
         col_6 = lst[3:]
@@ -70,30 +59,30 @@ def get_items_first_section(category, host):
 
 
 @register.inclusion_tag('news_app/tags/home/items-second-section.html')
-def get_items_second_section(category):
+def get_items_second_section(cat):
     # lst = category.post_set.filter(draft=False).reverse()[:4].select_related('category')
-    lst = Post.objects.filter(category__slug=category.slug, draft=False)[:4].select_related('category')
+    lst = Post.objects.filter(category__slug=cat.slug, draft=False)[:4].select_related('category')
     if len(lst) > 1:
         col_4 = lst
     else:
-        message = f"Для вывода блока требуется минимум 2 статьи в категории '{category.slug}'"
+        message = f"Для вывода блока требуется минимум 2 статьи в категории '{cat.slug}'"
 
-    category = category
+    category = cat
 
     return locals()
 
 
 @register.inclusion_tag('news_app/tags/home/items-third-section.html')
-def get_items_third_section(category):
-    lst = category.post_set.filter(draft=False)[:4].select_related('category')
+def get_items_third_section(cat):
+    lst = cat.post_set.filter(draft=False)[:4].select_related('category')
     # lst = Post.objects.filter(category__slug=category.slug, draft=False).reverse()[:4].select_related('category')
 
     if len(lst) > 1:
         col_3 = lst
     else:
-        message = f"Для вывода блока требуется минимум 2 статьи в категории '{category.slug}'"
+        message = f"Для вывода блока требуется минимум 2 статьи в категории '{cat.slug}'"
 
-    category = category
+    category = cat
 
     return locals()
 

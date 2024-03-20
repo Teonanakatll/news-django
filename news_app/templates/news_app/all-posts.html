@@ -1,9 +1,9 @@
 {% extends 'news_app/base.html' %}
-
+{% load news_tags %}
 {% load static %}
 {% load thumbnail %}
 
-{% block title %}Все статьи.{% endblock title %}
+{% block title %}{{ title }}{% endblock title %}
 
 {% block content %}
 
@@ -26,6 +26,8 @@
 
           {% if tag %}
             <div class="all-posts-header">Статьи по тегу :   <span> #{{ tag.name }}</span></div>
+          {% elif string %}
+            <div class="all-posts-header">Статьи по запросу :   <span style="text-transform: none;"> {{ string }}</span></div>
           {% else %}
 					  <div class="all-posts-header">Все статьи:</div>
           {% endif %}
@@ -61,7 +63,7 @@
 				</div>
 
 				<div class="col-md-4">
-					{% include 'news_app/tags/main-aside.html' %}
+					{% get_main_aside category %}
 				</div>
 
 			</div>

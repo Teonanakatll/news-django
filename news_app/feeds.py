@@ -3,6 +3,7 @@ from django.template.defaultfilters import truncatewords
 from .models import Post
 
 class LatestPostsFeed(Feed):
+    #TODO: разобраться с тегами и виджетами
     #TODO: сделать модель с донными сайта
     #TODO: прописать метатеги для всех страниц
     title = 'Geektop.ru'

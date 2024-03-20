@@ -67,9 +67,10 @@ class AboutAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     """Статья"""
     list_display = ("id", "category", "time_create", "get_image", "draft", "short", "tag_list",)
+    list_filter = ("category__name", "time_create")
 
     # NOT WORKING
-    search_fields = ("category__name", "tag_list")
+    search_fields = ("category__name", "time_create")
     list_display_links = ("category", "time_create", "short")
     list_editable = ("draft",)
     prepopulated_fields = {"slug": ("short",)}
@@ -77,6 +78,11 @@ class PostAdmin(admin.ModelAdmin):
     readonly_fields = ("tag_list", "get_image")
 
     formfield_overrides = formfield_overrides
+
+    # сохранить как новый обьект
+    save_as = True
+    # Отобразить панель редактирования сверху
+    save_on_top = True
 
     # fieldsets = (
     #     (None, {
@@ -113,3 +119,7 @@ class PostPhotoAdmin(admin.ModelAdmin):
             return mark_safe(f"<img src='{object.photo.url}' height=100>")
 
     get_photo.short_description = "Фото статьи"
+
+# Изменение названия админ панели и имени страницы
+admin.site.site_title = 'Админ-панель сайта Geektop.ru'
+admin.site.site_header = 'Админ-панель сайта Geektop.ru 2'

@@ -1,7 +1,7 @@
 from django.urls import path, re_path, include
 from django.views.generic import TemplateView
 
-from .views import home, category, about, all_posts, post
+from .views import home, category, about, all_posts, post, post_search, search_list
 
 from django.contrib.sitemaps.views import sitemap
 from django.views.decorators.cache import cache_page
@@ -24,6 +24,8 @@ urlpatterns = [
     path('all-posts/', all_posts, name='all_posts'),
     path('tag/<slug:tag_slug>/', all_posts, name='all_posts_by_tag'),
     path('<slug:category_slug>/<slug:post_slug>/', post, name='post'),
+    path('search/', post_search, name='search'),
+    path('search_list/<str:search_list>/', search_list, name='search_list'),
     path('feed/', LatestPostsFeed(), name='post_feed'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
          name='django.contrib.sitemaps.views.sitemap'),

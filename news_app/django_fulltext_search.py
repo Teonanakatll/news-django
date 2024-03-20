@@ -71,8 +71,8 @@ class SearchQuerySet(models.query.QuerySet):
 
             # Handle fields without a related model.
             else:
-                table  = meta.db_table
-                column = meta.get_field(field, many_to_many=False).column
+                table = meta.db_table
+                column = meta.get_field(field).column
 
             # Add field with `table`.`column` style to columns set.
             columns.add('{}.{}'.format(quote_name(table), quote_name(column)))
@@ -153,3 +153,14 @@ class SearchManager(models.Manager):
         SearchQuerySet's search() method.
         '''
         return self.get_query_set().search(query, **kwargs)
+
+#./manage.py makemigrations --empty customer
+
+# operations = [
+#     migrations.RunSQL(
+#         ('CREATE FULLTEXT INDEX customer_fulltext_index ON customer_customer (first_name, last_name)',),
+#         ('DROP INDEX customer_fulltext_index on customer_customer',)
+#     )
+# ]
+
+# ./manage.py migrate

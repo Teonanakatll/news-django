@@ -14,9 +14,9 @@
 	<!-- чтоб не писать слеш в ссылках -->
 	<base href="/">
 
-{#	<title>GEEKTOP - {% block title %}GEEKTOP.ru - Новости из мира IT{% endblock title %}</title>#}
-{#	<meta name="description" content="Новости электроники, технологий, современных гаджетов, и другая актуальная информация современной IT индустрии.">#}
-  {% block meta_tags %}{% include_meta_tags %}{% endblock %}
+	<title>{% block title %}GEEKTOP.ru - Новости из мира IT{% endblock title %}</title>
+	<meta name="description" content="Новости электроники, технологий, современных гаджетов, и другая актуальная информация современной IT индустрии.">
+{#  {% block meta_tags %}{% include_meta_tags %}{% endblock %}#}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
 	<link rel="icon" href="{% static 'news_app/img/favicon.png' %}">
@@ -43,11 +43,8 @@
 
 				<div class="search" title="Подсказка при наведении, Поиск по сайту"><div class="fa fa-search"></div></div>
 				<div class="search-field">
-					<form action="/search.html" id="cse-search-box">
-						<input type="hidden" name="cx" value="partner-pub-xxx:xxx" >
-						<input type="hidden" name="cof" value="FORID:10" >
-						<input type="hidden" name="ie" value="UTF-8" >
-						<input type="text" name="q" placeholder="Поиск по сайту..." >
+					<form action="{% url 'search' %}" method="get" id="cse-search-box">
+						<input type="text" name="query" placeholder="Поиск по сайту..." >
 					</form>
 				</div>
 			</div>
