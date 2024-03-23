@@ -111,6 +111,7 @@ DATABASES = {
         'HOST': 'localhost',
     }
 }
+# &hdb*Y2J
 
 
 # Password validation
