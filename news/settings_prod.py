@@ -1,5 +1,5 @@
 DEBUG = False
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['news.dve-verevki.ru', 'www.news.dve-verevki.ru']
 INTERNAL_IPS = None
 
 DATABASES = {
