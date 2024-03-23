@@ -17,26 +17,26 @@ def show_menu(menu, about, link_active=0):
     return locals()
 
 
-@register.inclusion_tag('news_app/tags/main-aside.html')
-def get_main_aside(cats):
+@register.inclusion_tag('news_app/tags/widgets/wid-last-category-articles.html')
+def get_last_category_articles(cats):
 
     lst = []
     for cat in cats:
-        lst.append(cat.post_set.filter(draft=False).select_related('category').first())
+        lst.append(cat.posts.filter(draft=False).first())
 
     return locals()
 
 
-@register.inclusion_tag('news_app/tags/widgets/read-more.html')
-def read_more(cat):
-    links = Post.objects.filter(category__name=cat.name, draft=False)[:5].select_related('category')
-    category = cat
+@register.inclusion_tag('news_app/tags/widgets/wid-read-more.html')
+def read_more(post):
+    links = Post.objects.filter(category__name=post.category.name, draft=False).exclude(id=post.id)[:5].select_related('category')
+    category = post.category
 
     return locals()
 
 
-@register.inclusion_tag('news_app/tags/widgets/tags_cloud.html')
-def get_tags_cloud():
+@register.inclusion_tag('news_app/tags/widgets/wid-settings-tags-cloud.html')
+def get_tags_cloud_script():
     # просто возвращает список отсортированный убыванию количества
     tags = Post.tags.most_common()[:30]
 
@@ -74,8 +74,7 @@ def get_items_second_section(cat):
 
 @register.inclusion_tag('news_app/tags/home/items-third-section.html')
 def get_items_third_section(cat):
-    lst = cat.post_set.filter(draft=False)[:4].select_related('category')
-    # lst = Post.objects.filter(category__slug=category.slug, draft=False).reverse()[:4].select_related('category')
+    lst = cat.posts.filter(draft=False)[:4]
 
     if len(lst) > 1:
         col_3 = lst
@@ -89,7 +88,7 @@ def get_items_third_section(cat):
 
 @register.inclusion_tag('news_app/tags/home/items-fourth-section.html')
 def get_items_fourth_section(category):
-    lst = category.post_set.filter(draft=False)[:4].select_related('category')
+    lst = category.posts.filter(draft=False)[:4].select_related('category')
     category = category
 
     if len(lst) > 1:
@@ -103,7 +102,7 @@ def get_items_fourth_section(category):
 @register.inclusion_tag('news_app/tags/type-one-section.html')
 def get_type_one_section(random_cat):
 
-    lst = random_cat.post_set.filter(draft=False)[:3].select_related('category')
+    lst = random_cat.posts.filter(draft=False)[:3].select_related('category')
     category = random_cat
 
     if len(lst) > 2:

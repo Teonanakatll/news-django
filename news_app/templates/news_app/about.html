@@ -35,7 +35,15 @@
 
 			<div class="col-md-4">
 
-				{% get_main_aside category %}
+				<aside class="main-aside">
+
+          {% include 'news_app/tags/widgets/wid-reclam-vertical.html' %}
+
+          {% get_last_category_articles category %}
+
+          {% include 'news_app/tags/widgets/wid-vk-widget.html' %}
+
+        </aside>
 
 			</div>
 
@@ -43,4 +51,8 @@
 	</div>
 </div>
 
+{% endblock %}
+
+{% block scripts %}
+  {% include 'news_app/include/scripts/vk-script.html' %}
 {% endblock %}

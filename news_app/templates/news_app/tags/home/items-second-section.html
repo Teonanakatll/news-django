@@ -1,7 +1,5 @@
 {% load static %}
 
-
-
 	<section class="second-section">
 
 			<div class="container-fluid">
@@ -38,13 +36,9 @@
 
 					<div class="col-md-4">
 
-						<div class="aside-box">
-							<img src="{% static 'news_app/img/vk-witget.jpg' %}" alt="vk widget" class="img-responsive">
-						</div>
+						{% include 'news_app/tags/widgets/wid-tags-cloud.html' %}
 
-						<div class="aside-box">
-							<img src="{% static 'news_app/img/ad-cube.jpg' %}" alt="reclama" class="img-responsive">
-						</div>
+            {% include 'news_app/tags/widgets/wid-reclam-cube.html' %}
 
 					</div>
 

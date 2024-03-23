@@ -1,10 +1,8 @@
 {% extends 'news_app/base.html' %}
 {% block title %}Категория: {{ cat.name }}{% endblock title %}
 {% load static %}
-
+{% load thumbnail %}
 {% load news_tags %}
-
-
 
 {% block content %}
 
@@ -30,7 +28,7 @@
 				<img src="{% static 'news_app/img/ad-horizontal.jpg' %}" alt="alt" class="img-responsive">
 			</div>
 			
-			{% get_type_one_section random_cat %}
+			{% get_type_one_section first_cat %}
 
 		</div>
 	</div>
@@ -41,14 +39,20 @@
 
 				<div class="col-md-8">
 
+
+          <h2 class="mb-5">
+            Все статьи из категории: <span>{{ cat.name }}</span>
+          </h2>
+
 					<div class="cat-list-wrap">
 
 						{% for post in page_obj %}
+              {% thumbnail post.image "422x272" crop="50%" quality=70 as im %}
 							<a href="{{ post.get_absolute_url }}" class="cat-list-item">
 								<div class="row">
 									<div class="col-sm-6">
 										<div class="pattern">
-											<img src="{{ post.image.url }}" alt="" class="img-responsive overlay">
+											<img src="{{ im.url }}" alt="{{ post.header}}" class="img-responsive overlay">
 										</div>
 									</div>
 
@@ -59,6 +63,7 @@
 									</div>
 								</div>
 							</a>
+              {% endthumbnail %}
 						{% endfor %}
 
 					</div>
@@ -71,7 +76,17 @@
 
 			  <div class="col-md-4">
 
-          {% get_main_aside category %}
+          <aside class="main-aside">
+
+            {% include 'news_app/tags/widgets/wid-reclam-vertical.html' %}
+
+            {% get_last_category_articles category %}
+
+            {% include 'news_app/tags/widgets/wid-vk-widget.html' %}
+
+            {% include 'news_app/tags/widgets/wid-last-comments.html' %}
+
+          </aside>
 
         </div>
 
@@ -80,4 +95,14 @@
 		</div>
 	</div>
 
+{% endblock %}
+
+{% block footer_top %}
+
+  {% get_items_third_section second_cat %}
+
+{% endblock %}
+
+{% block scripts %}
+  {% include 'news_app/include/scripts/vk-script.html' %}
 {% endblock %}

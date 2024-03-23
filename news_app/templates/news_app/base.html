@@ -17,7 +17,7 @@
 	<title>{% block title %}GEEKTOP.ru - Новости из мира IT{% endblock title %}</title>
 	<meta name="description" content="Новости электроники, технологий, современных гаджетов, и другая актуальная информация современной IT индустрии.">
 {#  {% block meta_tags %}{% include_meta_tags %}{% endblock %}#}
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
 
 	<link rel="icon" href="{% static 'news_app/img/favicon.png' %}">
 	<meta property="og:image" content="{% static 'news_app/img/example.jpg' %}">
@@ -26,7 +26,8 @@
 	<!-- Цвет в который будет окрашиваться заголовок браузера например мобильный хром, opera -->
 	<meta name="theme-color" content="#ec1c1c">
 	<!-- Custom Browsers Color End -->
-
+  {# vk #}
+  <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
 
 	<link rel="stylesheet" href="{% static 'news_app/css/app.min.css' %}">
 
@@ -35,28 +36,28 @@
 
 {#    {% get_menu as menu %}#}
 
-		<header class="top-line">
+  <header class="top-line">
 
-			<a href="/" class="logo logo-litera">GeekTOP</a>
+    <a href="/" class="logo logo-litera">GeekTOP</a>
 
-			<div class="search-wrap">
+    <div class="search-wrap">
 
-				<div class="search" title="Подсказка при наведении, Поиск по сайту"><div class="fa fa-search"></div></div>
-				<div class="search-field">
-					<form action="{% url 'search' %}" method="get" id="cse-search-box">
-						<input type="text" name="query" placeholder="Поиск по сайту..." >
-					</form>
-				</div>
-			</div>
+      <div class="search" title="Подсказка при наведении, Поиск по сайту"><div class="fa fa-search"></div></div>
+      <div class="search-field">
+        <form action="{% url 'search' %}" method="get" id="cse-search-box">
+          <input type="text" name="query" placeholder="Поиск по сайту..." >
+        </form>
+      </div>
+    </div>
 
-			<div class="mobile-menu-button"><i class="fa fa-bars"></i> меню</div>
+    <div class="mobile-menu-button"><i class="fa fa-bars"></i> меню</div>
 
-			<nav class="main-menu top-menu">
+    <nav class="main-menu top-menu">
 
-				{% show_menu category about link_active %}
-			</nav>
+      {% show_menu category about link_active %}
+    </nav>
 
-		</header>
+  </header>
 
 	{% block content %}
 
@@ -64,38 +65,40 @@
 
 	{% endblock %}
 
-  	{% if page_obj.has_other_pages %}
-		<!-- классы bootstrap display: none, display: block -->
-		<div class="pagination-section text-center d-none d-md-block">
+  {% if page_obj.has_other_pages %}
+  <!-- классы bootstrap display: none, display: block -->
+    <div class="pagination-section text-center d-none d-md-block">
 
-			{% if page_obj.has_next %}
-				<a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="button">Следующая страница <i class="fa fa-angle-double-right"></i></a>
-			{% endif %}
-			<div class="pagination">
-				{% if page_obj.has_previous %}
-					<a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" class="pagination-left" title="Предыдущая страница">&laquo;</a>
-				{% else %}
-					<span class="pagination-left" title="Предыдущая страница">&laquo;</span>
-				{% endif %}
+    {% if page_obj.has_next %}
+      <a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="button">Следующая страница <i class="fa fa-angle-double-right"></i></a>
+    {% endif %}
+    <div class="pagination">
+      {% if page_obj.has_previous %}
+        <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}" class="pagination-left" title="Предыдущая страница">&laquo;</a>
+      {% else %}
+        <span class="pagination-left" title="Предыдущая страница">&laquo;</span>
+      {% endif %}
 
-				{% for p in page_obj.paginator.page_range %}
-					{% if page_obj.number == p %}
-					<span class="active">{{ p }}</span>
-					{% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
-						<a href="{{ request.path }}?page={{ p }}">{{ p }}</a>
-					{% endif %}
-				{% endfor %}
+      {% for p in page_obj.paginator.page_range %}
+        {% if page_obj.number == p %}
+        <span class="active">{{ p }}</span>
+        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+          <a href="{{ request.path }}?page={{ p }}">{{ p }}</a>
+        {% endif %}
+      {% endfor %}
 
-				{% if page_obj.has_next %}
-					<a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="pagination-right" title="Следующая страница">&raquo;</a>
-				{% else %}
-					<span class="pagination-right" title="Следующая страница">&raquo;</span>
-				{% endif %}
-			</div>
+      {% if page_obj.has_next %}
+        <a href="{{ request.path }}?page={{ page_obj.next_page_number }}" class="pagination-right" title="Следующая страница">&raquo;</a>
+      {% else %}
+        <span class="pagination-right" title="Следующая страница">&raquo;</span>
+      {% endif %}
+    </div>
 
 
-			</div>
-	{% endif %}
+    </div>
+  {% endif %}
+
+  {% block footer_top %}{% endblock %}
 
 	<footer class="main-footer">
 		<div class="container text-center">
@@ -127,7 +130,7 @@
 	<script src="{% static 'news_app/js/app.min.js' %}"></script>
 	<script id="dsq-count-scr" src="//geektop-ru-12.disqus.com/count.js" async></script>
 
-  {% get_tags_cloud %}
+  {% block scripts %}{% get_tags_cloud_script %}{% endblock %}
 
 </body>
 </html>

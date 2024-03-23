@@ -107,27 +107,48 @@
 							<img src="{% static 'news_app/img/ad-horizontal.jpg' %}" alt="alt" class="img-responsive">
 						</div>
 
-						{% read_more post.category %}
+						{% read_more post %}
 
 						<div class="comments">
 							{% include 'news_app/include/disqus-comments.html' %}
 						</div>
 
 					</div>
-					
 
 				</article>
 
 			</div>
 
       <div class="col-md-4">
+{#        {% get_main_aside category %}#}
+        <aside class="main-aside">
 
-				{% get_main_aside category %}
+          {% include 'news_app/tags/widgets/wid-tags-cloud.html' %}
 
+          {% include 'news_app/tags/widgets/wid-reclam-vertical.html' %}
+
+          {% get_last_category_articles category %}
+
+          {% include 'news_app/tags/widgets/wid-vk-widget.html' %}
+
+        </aside>
       </div>
 
 		</div>
 	</div>
 </div>
+
+{% endblock %}
+
+{% block footer_top %}
+
+  {% get_items_third_section random_cat %}
+
+{% endblock %}
+
+{% block scripts %}
+
+  {% include 'news_app/include/scripts/vk-script.html' %}
+  {% get_tags_cloud_script %}
 
 {% endblock %}

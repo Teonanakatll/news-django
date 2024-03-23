@@ -6,7 +6,9 @@
 {% block title %}{{ title }}{% endblock title %}
 
 {% block content %}
-
+  <div class="hide-sect">
+    {% get_items_third_section first_cat %}
+  </div>
 	<div class="cat-list-first">
 		<div class="container-fluid">
 
@@ -25,23 +27,23 @@
 				<div class="col-md-8">
 
           {% if tag %}
-            <div class="all-posts-header">Статьи по тегу :   <span> #{{ tag.name }}</span></div>
+            <div class="all-posts-header mb-4">Статьи по тегу :   <span> #{{ tag.name }}</span></div>
           {% elif string %}
             <div class="all-posts-header">Статьи по запросу :   <span style="text-transform: none;"> {{ string }}</span></div>
           {% else %}
-					  <div class="all-posts-header">Все статьи:</div>
+					  <div class="all-posts-header mb-4">Все статьи:</div>
           {% endif %}
 
 
 					<div class="cat-list-wrap">
 
             {% for post in page_obj %}
-              {% thumbnail post.image "422x272" crop="50%" quality=80 as im %}
+              {% thumbnail post.image "422x272" crop="50%" quality=70 as im %}
               <a href="{{ post.get_absolute_url }}" class="cat-list-item">
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="pattern">
-                      <img src="{{ im.url }}" alt="" class="img-responsive overlay">
+                      <img src="{{ im.url }}" alt="{{ post.header }}" class="img-responsive overlay">
                     </div>
                   </div>
 
@@ -63,7 +65,16 @@
 				</div>
 
 				<div class="col-md-4">
-					{% get_main_aside category %}
+
+          <aside class="main-aside">
+
+            {% include 'news_app/tags/widgets/wid-reclam-vertical.html' %}
+
+            {% get_last_category_articles category %}
+
+            {% include 'news_app/tags/widgets/wid-vk-widget.html' %}
+
+          </aside>
 				</div>
 
 			</div>
@@ -71,5 +82,17 @@
 
 
 	</div>
+
+{% endblock %}
+
+{% block footer_top %}
+
+  {% get_items_third_section second_cat %}
+
+{% endblock %}
+
+{% block scripts %}
+
+  {% include 'news_app/include/scripts/vk-script.html' %}
 
 {% endblock %}

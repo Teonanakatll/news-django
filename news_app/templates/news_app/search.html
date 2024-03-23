@@ -7,6 +7,8 @@
 
 {% block content %}
 
+  {% get_items_third_section first_cat %}
+
 	<div class="cat-list-first">
 		<div class="container-fluid">
 
@@ -54,7 +56,8 @@
               {% endfor %}
 
               {% if search_list %}
-              <div class="s_more mr-5 text-center" style="margin-right: 30px; margin-bottom: 20px">
+             {#  TODO: style  #}
+              <div class="s_more text-center" style="margin-right: 20px; margin-bottom: 20px">
                 <div class="container">
                   <a href="{% url 'search_list' search_list %}" class="button">смотреть все результаты...</a>
                 </div>
@@ -82,7 +85,17 @@
 				</div>
 
 				<div class="col-md-4">
-					{% get_main_aside category %}
+          <aside class="main-aside">
+
+            {% include 'news_app/tags/widgets/wid-tags-cloud.html' %}
+
+            {% include 'news_app/tags/widgets/wid-reclam-vertical.html' %}
+
+            {% get_last_category_articles category %}
+
+            {% include 'news_app/tags/widgets/wid-vk-widget.html' %}
+
+          </aside>
 				</div>
 
 			</div>
@@ -90,5 +103,18 @@
 
 
 	</div>
+
+{% endblock %}
+
+{% block footer_top %}
+
+  {% get_items_third_section second_cat %}
+
+{% endblock %}
+
+{% block scripts %}
+
+  {% include 'news_app/include/scripts/vk-script.html' %}
+  {% get_tags_cloud_script %}
 
 {% endblock %}

@@ -5,24 +5,13 @@ from django.db.models import Q
 from . models import Category, Post
 from . forms import SearchForm
 from django.shortcuts import get_object_or_404
-from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.paginator import Paginator
+from . utils import get_page_obj, get_random_category
 
 from random import randint
 
 from django.views.decorators.cache import cache_page
 
-
-def get_page_obj(paginator, page_number):
-    try:
-        page_obj = paginator.get_page(page_number)
-    # если указанная страница не является целым числом
-    except PageNotAnInteger:
-        page_obj = paginator.get_page(1)
-    # если указанный номер больше, чем всего страниц, возвращаем последнюю
-    except EmptyPage:
-        page_obj = paginator.page(paginator.num_pages)
-
-    return page_obj
 
 # @cache_page(60 * 2)
 def home(request):
@@ -52,24 +41,21 @@ def category(request, cat_slug):
     template = 'news_app/category.html'
     cat = Category.objects.get(slug=cat_slug, draft=False)
     link_active = cat.id
-    posts = cat.post_set.all()
+    posts = cat.posts.filter(draft=False)
 
-    def get_random_category(num):
-        while 1:
-            rand = randint(1, num)
-            if rand != cat.id:
-                return Category.objects.filter(draft=False)[rand - 1]
+    first_cat = get_random_category(cat.id)
 
-    random_cat = get_random_category(Category.objects.filter(draft=False).count())
+    second_cat = get_random_category((cat.id, first_cat.id))
 
-    paginator = Paginator(posts, 2)
+    paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = get_page_obj(paginator, page_number)
 
     data = {
         'cat': cat,
         'page_obj': page_obj,
-        'random_cat': random_cat,
+        'first_cat': first_cat,
+        'second_cat': second_cat,
         'link_active': link_active
     }
 
@@ -88,7 +74,6 @@ def all_posts(request, tag_slug=None):
     posts = Post.objects.filter(draft=False).select_related('category')
     tag = None
 
-
     title = "Все статьи."
 
     if tag_slug:
@@ -99,10 +84,13 @@ def all_posts(request, tag_slug=None):
     paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
     page_obj = get_page_obj(paginator, page_number)
+    first_cat, second_cat = get_random_category()
 
     data = {
         'title': title,
         'page_obj': page_obj,
+        'first_cat': first_cat,
+        'second_cat': second_cat,
         'tag': tag,
     }
 
@@ -114,8 +102,16 @@ def post(request, category_slug, post_slug):
     post = get_object_or_404(Post, slug=post_slug)
     host = request.get_host()
     post_category = Category.objects.get(slug=category_slug)
+    random_cat = get_random_category()
 
-    return render(request, 'news_app/post.html', {'post_category': post_category, 'post': post, 'host': host})
+    data = {
+        'post_category': post_category,
+        'post': post,
+        'host': host,
+        'random_cat': random_cat[0],
+    }
+
+    return render(request, 'news_app/post.html', context=data)
 
 
 def post_search(request):
@@ -125,6 +121,7 @@ def post_search(request):
     posts = []
     search_list = None
     title = 'Страница поиска.'
+    first_cat, second_cat = get_random_category()
 
     # print(f"поисковый запрос {request.GET}")
     if 'query' in request.GET:
@@ -140,6 +137,9 @@ def post_search(request):
             count = posts_all.count()
             posts = posts_all[:first_page_num]
 
+            # если количество результатов поиска больше количества постов установленных нами для
+            # отображения на странице поиска +1, передаём оставшийся список на вьюху search_list для
+            # отрисовки на шаблоне all-posts.html для корректной пагинации
             if len(posts_all) > first_page_num + 1:
                 search_list = posts_all[10:]
                 # список id всех статей по результатам поиска
@@ -150,13 +150,18 @@ def post_search(request):
                 # преобразование списка id в одну строку
                 search_list = ' '.join(str(x) for x in search_list)
                 # print(f'search_list{search_list}')
+    data = {
+        'form': form,
+        'title': title,
+        'query': query,
+        'count': count,
+        'search_list': search_list,
+        'first_cat': first_cat,
+        'second_cat': second_cat,
+        'posts': posts
+    }
 
-    return render(request, 'news_app/search.html', {'form': form,
-                                                    'title': title,
-                                                    'query': query,
-                                                    'count': count,
-                                                    'search_list': search_list,
-                                                    'posts': posts})
+    return render(request, 'news_app/search.html', context=data)
 
 def search_list(request, search_list):
     # создаём список из строки и преобразуем в int
@@ -174,13 +179,13 @@ def search_list(request, search_list):
     page_number = request.GET.get('page')
     page_obj = get_page_obj(paginator, page_number)
 
-    context = {
+    data = {
         'page_obj': page_obj,
         'title': title,
         'string': string,
     }
 
-    return render(request, 'news_app/all-posts.html', context=context)
+    return render(request, 'news_app/all-posts.html', context=data)
 
 
 def tr_handler404(request, exception):

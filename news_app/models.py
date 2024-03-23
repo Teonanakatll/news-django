@@ -60,7 +60,7 @@ class Post(models.Model):
     image = models.ImageField("Фото", upload_to="news_img/%Y/%h/%d", blank=True)
     slug = models.SlugField("url", unique=True, db_index=True)
     draft = models.BooleanField("Черновик", default=False)
-    category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, verbose_name="Категория", on_delete=models.SET_NULL, null=True, related_name="posts")
     tags = TaggableManager()
 
     def get_category_slug(self):
