@@ -269,3 +269,9 @@ CKEDITOR_5_CONFIGS = {
         }
     }
 }
+
+if DEBUG == False:
+    try:
+        from .settings_prod import *
+    except:
+        pass
