@@ -1,9 +1,12 @@
 {% extends 'news_app/base.html' %}
-{% block title %}Категория: {{ cat.name }}{% endblock title %}
 {% load static %}
 {% load thumbnail %}
 {% load news_tags %}
-
+{% block title %}Категория: {{ cat.name }}{% endblock title %}
+{% block tags %}
+  <meta name="keywords" content="">
+  <meta name="description" content="{{ cat.description }}">
+{% endblock %}
 {% block content %}
 
 	<div class="pattern pattern-cat-header">

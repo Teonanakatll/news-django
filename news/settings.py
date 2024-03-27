@@ -54,6 +54,10 @@ INSTALLED_APPS = [
     'taggit',
     'sorl.thumbnail',
 
+    #for full text search
+    'whoosh',
+    'haystack',
+
 ]
 
 MIDDLEWARE = [
@@ -95,22 +99,34 @@ WSGI_APPLICATION = 'news.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+WHOOSH_INDEX = os.path.join(BASE_DIR, 'whoosh/')
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+# HAYSTACK_DOCUMENT_FIELD = 'header'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': WHOOSH_INDEX,
+    },
+}
 
 DATABASES = {
     'default': {
-        'NAME': 'news',
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+
+# DATABASES = {
+#     'default': {
+#         'NAME': 'news',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'USER': 'root',
+#         'PASSWORD': 'root',
+#         'HOST': 'localhost',
+#     }
+# }
 # &hdb*Y2J
 
 

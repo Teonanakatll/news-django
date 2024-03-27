@@ -1,14 +1,12 @@
 {% extends 'news_app/base.html' %}
-
 {% load static %}
-
 {% load meta_tags %}
-
 {% load news_tags %}
-
 {% block title %}{{ post.short }}{% endblock title %}
-
-{% block meta_tags %}{% include_meta_tags post %}{% endblock %}
+{% block tags %}
+  <meta name="keywords" content="">
+  <meta name="description" content="{{ post.header }}">
+{% endblock %}
 
 {% block body %}<body class="ispage">{% endblock body %}
 

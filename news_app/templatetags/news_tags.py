@@ -1,5 +1,7 @@
 from django import template
 from django.core.cache import cache
+from django.utils.safestring import mark_safe
+
 from django.views.decorators.cache import cache_page
 from django.shortcuts import get_object_or_404
 
@@ -9,6 +11,15 @@ from collections import defaultdict, Counter
 from news_app.models import *
 
 register = template.Library()
+
+
+@register.filter
+def highlight_search(text, search):
+    search = search.replace('"', '')
+    from haystack.utils.highlighting import Highlighter
+    highlight = Highlighter(search, html_tag='span', css_class='highlighted', max_length=500)
+
+    return highlight.highlight(text)
 
 
 @register.inclusion_tag('news_app/tags/menu.html')
@@ -21,8 +32,10 @@ def show_menu(menu, about, link_active=0):
 def get_last_category_articles(cats):
 
     lst = []
+
     for cat in cats:
-        lst.append(cat.posts.filter(draft=False).first())
+        # prefetch_related !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        lst.append([cat.posts.first(), cat])
 
     return locals()
 
@@ -114,3 +127,8 @@ def get_type_one_section(random_cat):
 
     return locals()
 
+
+@register.filter
+def highlight_s(text, search):
+    highlighted = text.replace(search, '<span class="highlight">{}</span>'.format(search))
+    return mark_safe(highlighted)

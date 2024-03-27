@@ -156,11 +156,18 @@ class SearchManager(models.Manager):
 
 #./manage.py makemigrations --empty customer
 
-# operations = [
-#     migrations.RunSQL(
-#         ('CREATE FULLTEXT INDEX customer_fulltext_index ON customer_customer (first_name, last_name)',),
-#         ('DROP INDEX customer_fulltext_index on customer_customer',)
-#     )
-# ]
+# class Migration(migrations.Migration):
+#
+#     dependencies = [
+#         ('news_app', '0019_alter_post_options'),
+#     ]
+#
+#     operations = [
+#         migrations.RunSQL(
+#             ('CREATE FULLTEXT INDEX news_app_fulltext_index ON news_app_post (header, article)',),
+#             ('DROP INDEX news_app_fulltext_index on news_app_post',)
+#         )
+#     ]
+
 
 # ./manage.py migrate

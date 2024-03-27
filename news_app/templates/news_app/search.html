@@ -3,11 +3,15 @@
 {% load static %}
 {% load thumbnail %}
 
+
+
 {% block title %}{{ title }}{% endblock title %}
 
 {% block content %}
 
-  {% get_items_third_section first_cat %}
+  <div class="hide-sect">
+    {% get_items_third_section first_cat %}
+  </div>
 
 	<div class="cat-list-first">
 		<div class="container-fluid">
@@ -36,30 +40,32 @@
               <div class="search-border"></div>
 
               {% for post in posts %}
-                {% thumbnail post.image "422x272" crop="50%" quality=80 as im %}
-                <a href="{{ post.get_absolute_url }}" class="cat-list-item">
+                {% thumbnail post.object.image "422x272" crop="50%" quality=80 as im %}
+                <a href="{{ post.object.get_absolute_url }}" class="cat-list-item">
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="pattern">
                         <img src="{{ im.url }}" alt="" class="img-responsive overlay">
                       </div>
                     </div>
+                    {% endthumbnail %}
 
                     <div class="col-sm-6">
-                      <h3>{{ post.short }}</h3>
-                      <div class="date">{{ post.time_create|date:"d/m/Y" }}</div>
-                      {{ post.article | truncatewords:15 | safe }}
+                      <h3>{{ post.object.header|highlight_search:query | safe }}</h3>
+                      <div class="date">{{ post.object.time_create | date:"d/m/Y" }}</div>
+
+                      {{ post.object.article|highlight_search:query | safe  }}
                     </div>
                   </div>
                 </a>
-                {% endthumbnail %}
+
               {% endfor %}
 
-              {% if search_list %}
+              {% if query %}
              {#  TODO: style  #}
               <div class="s_more text-center" style="margin-right: 20px; margin-bottom: 20px">
                 <div class="container">
-                  <a href="{% url 'search_list' search_list %}" class="button">смотреть все результаты...</a>
+                  <a href="{% url 'search_list' query first_page_num %}" class="button">смотреть все результаты...</a>
                 </div>
               </div>
             {% endif %}

@@ -6,9 +6,9 @@
         <div class="lb-list">
 
 
-          {% for post in lst %}
+          {% for post, cat in lst %}
             <div class="lb-item">
-              <a href="{{ post.category.get_absolute_url }}" class="lb-catname">{{ post.category.name}}</a>
+              <a href="{{ cat.get_absolute_url }}" class="lb-catname">{{ cat.name}}</a>
               <div class="lb-body">
                 <a href="{{ post.get_absolute_url }}" class="lb-item-header">{{ post.short}}</a>
                 <div class="lb-footer">

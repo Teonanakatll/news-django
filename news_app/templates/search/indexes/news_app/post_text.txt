@@ -1,0 +1,5 @@
+{{ object.header }}
+{{ object.article }}
+{{ object.time_create }}
+{{ object.image }}
+

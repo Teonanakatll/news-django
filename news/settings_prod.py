@@ -5,13 +5,14 @@ INTERNAL_IPS = None
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ffaaeerr11',
-        'USER': 'ffaaeerr11',
-        'PASSWORD': 'E%e4PC9Y7JHYGM1A',
-        'HOST': '127.0.0.1',
-        'PORT': '3308',
+        'NAME': 'ffaaeepi_news',
+        'USER': 'ffaaeepi_news',
+        'PASSWORD': '*UI2CerW',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -25,7 +26,7 @@ INSTALLED_APPS = [
     'news_app.apps.NewsAppConfig',
     # https://django-extensions.readthedocs.io/en/latest/ документация по расширениям джанго
     'django_extensions',
-    # 'debug_toolbar',
+    'debug_toolbar',
 
     'django.contrib.sites',
     'django.contrib.sitemaps',

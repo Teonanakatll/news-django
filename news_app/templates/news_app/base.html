@@ -6,31 +6,41 @@
 
 {% load news_tags %}
 
-<html lang="ru">
+<html lang="ru" prefix="og: http://ogp.me/ns#">
 
 <head>
 
 	<meta charset="utf-8">
 	<!-- чтоб не писать слеш в ссылках -->
 	<base href="/">
+  {# Open Graph #}
+
 
 	<title>{% block title %}GEEKTOP.ru - Новости из мира IT{% endblock title %}</title>
-	<meta name="description" content="Новости электроники, технологий, современных гаджетов, и другая актуальная информация современной IT индустрии.">
-{#  {% block meta_tags %}{% include_meta_tags %}{% endblock %}#}
+  {% block tags %}
+    <meta name="keywords" content="">
+    <meta name="description" content="Новости электроники, технологий, современных гаджетов, и другая актуальная информация современной IT индустрии.">
+  {% endblock %}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
 
 	<link rel="icon" href="{% static 'news_app/img/favicon.png' %}">
-	<meta property="og:image" content="{% static 'news_app/img/example.jpg' %}">
 
 	<!-- Custom Browsers Color Start -->
 	<!-- Цвет в который будет окрашиваться заголовок браузера например мобильный хром, opera -->
 	<meta name="theme-color" content="#ec1c1c">
 	<!-- Custom Browsers Color End -->
   {# vk #}
-  <script type="text/javascript" src="https://vk.com/js/api/openapi.js?168"></script>
-
+  <script src="https://vk.com/js/api/openapi.js?168"></script>
 	<link rel="stylesheet" href="{% static 'news_app/css/app.min.css' %}">
 
+  <meta property="og:title" content="Новости электроники, технологий, современных гаджетов, и другая актуальная информация современной IT индустрии.">
+  <meta property="og:description" content="Новости электроники, технологий, современных гаджетов, и другая актуальная информация современной IT индустрии.">
+  <meta property="og:site_name" content="Блог PromoPult о развитии сайта и привлечении клиентов из интернета">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.geektop.ru/">
+  <meta property="og:image" content="{% static 'news_app/img/example.jpg' %}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
 </head>
 	{% block body %} <body> {% endblock body %}
 
@@ -44,6 +54,7 @@
 
       <div class="search" title="Подсказка при наведении, Поиск по сайту"><div class="fa fa-search"></div></div>
       <div class="search-field">
+
         <form action="{% url 'search' %}" method="get" id="cse-search-box">
           <input type="text" name="query" placeholder="Поиск по сайту..." >
         </form>
@@ -52,7 +63,7 @@
 
     <div class="mobile-menu-button"><i class="fa fa-bars"></i> меню</div>
 
-    <nav class="main-menu top-menu">
+    <nav aria-label="top menu" class="main-menu top-menu">
 
       {% show_menu category about link_active %}
     </nav>
@@ -103,11 +114,11 @@
 	<footer class="main-footer">
 		<div class="container text-center">
 
-			<nav class="main-menu footer-menu">
+			<nav aria-label="footer menu" class="main-menu footer-menu">
 				{% show_menu category about link_active %}
 			</nav>
 
-			<nav class="soc">
+			<nav aria-label="soc-icons" class="soc">
 				<ul>
 					<li><a href="#"><i class="fa fa-vk"></i></a></li>
 					<li><a href="#"><i class="fa fa-facebook"></i></a></li>

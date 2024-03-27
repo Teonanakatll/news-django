@@ -7,8 +7,7 @@ from . forms import SearchForm
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator
 from . utils import get_page_obj, get_random_category
-
-from random import randint
+from haystack.query import SearchQuerySet
 
 from django.views.decorators.cache import cache_page
 
@@ -101,11 +100,9 @@ def all_posts(request, tag_slug=None):
 def post(request, category_slug, post_slug):
     post = get_object_or_404(Post, slug=post_slug)
     host = request.get_host()
-    post_category = Category.objects.get(slug=category_slug)
     random_cat = get_random_category()
 
     data = {
-        'post_category': post_category,
         'post': post,
         'host': host,
         'random_cat': random_cat[0],
@@ -113,67 +110,53 @@ def post(request, category_slug, post_slug):
 
     return render(request, 'news_app/post.html', context=data)
 
-
-def post_search(request):
+def search_haystack(request):
     form = SearchForm()
-    query = None
-    count = None
-    posts = []
-    search_list = None
     title = 'Страница поиска.'
+    first_page_num = None
     first_cat, second_cat = get_random_category()
+    search_list = []
 
-    # print(f"поисковый запрос {request.GET}")
     if 'query' in request.GET:
         form = SearchForm(request.GET)
-
         if form.is_valid():
             # количество постов на странице поиска
             first_page_num = 10
             query = form.cleaned_data['query']
             query = f'"{query}"'
             title = f'результаты поиска по запросу - {query}.'
-            posts_all = Post.objects.search(query).filter(draft=False).select_related('category')
-            count = posts_all.count()
+
+            posts_all = SearchQuerySet().autocomplete(content_auto=query)
+            posts_all = [p for p in posts_all]
+            count = len(posts_all)
             posts = posts_all[:first_page_num]
 
-            # если количество результатов поиска больше количества постов установленных нами для
-            # отображения на странице поиска +1, передаём оставшийся список на вьюху search_list для
-            # отрисовки на шаблоне all-posts.html для корректной пагинации
-            if len(posts_all) > first_page_num + 1:
-                search_list = posts_all[10:]
-                # список id всех статей по результатам поиска
-                search_list = [n.id for n in search_list]
-                # добавляем в конец списка поисковый запрос для отрисовки на вьюхе search_list
-                search_list.append(query)
 
-                # преобразование списка id в одну строку
-                search_list = ' '.join(str(x) for x in search_list)
-                # print(f'search_list{search_list}')
     data = {
         'form': form,
         'title': title,
         'query': query,
         'count': count,
-        'search_list': search_list,
+        'first_page_num': first_page_num,
         'first_cat': first_cat,
         'second_cat': second_cat,
-        'posts': posts
-    }
+        'posts': posts,
+        }
 
     return render(request, 'news_app/search.html', context=data)
 
-def search_list(request, search_list):
-    # создаём список из строки и преобразуем в int
-    lst = search_list.split()
-    for i in range(len(lst)):
-        if i > len(lst) - 1:
-            lst[i] = int(lst[i])
-    # вырезаем из списка поисковый запрос для отрисовке в title
-    string = lst.pop()
-    title = f'Статьи по запросу: {string}.'
 
-    posts = Post.objects.filter(id__in=lst).select_related('category')
+def search_list(request, query, first_page_num):
+    first_cat, second_cat = get_random_category()
+
+    title = f'Статьи по запросу: {query}.'
+    string = query
+    query = query.replace('"', '')
+
+    # posts = Post.objects.filter(id__in=lst).select_related('category')
+    posts = SearchQuerySet().autocomplete(content_auto=query)
+    posts = [p for p in posts]
+    posts = posts[first_page_num:]
 
     paginator = Paginator(posts, 5)
     page_number = request.GET.get('page')
@@ -181,8 +164,11 @@ def search_list(request, search_list):
 
     data = {
         'page_obj': page_obj,
+        'query': query,
         'title': title,
         'string': string,
+        'first_cat': first_cat,
+        'second_cat': second_cat,
     }
 
     return render(request, 'news_app/all-posts.html', context=data)

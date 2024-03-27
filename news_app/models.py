@@ -49,7 +49,7 @@ class Post(models.Model):
     """Статья"""
 
     # Enable full-text search support for header and article fields.
-    objects = SearchManager(['header', 'article'])
+    # objects = SearchManager(['header', 'article'])
 
     header = models.CharField("Заголовок", max_length=350)
     short = models.CharField("Короткий заголовок", max_length=150, blank=True)
@@ -71,7 +71,7 @@ class Post(models.Model):
         return self.short
 
     def get_absolute_url(self):
-        return reverse('post', kwargs={'category_slug': self.get_category_slug(), 'post_slug': self.slug})
+        return reverse('post', kwargs={'category_slug': self.category.slug, 'post_slug': self.slug})
 
     class Meta:
         verbose_name = "Статья"
