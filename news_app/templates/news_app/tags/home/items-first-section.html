@@ -1,3 +1,5 @@
+{% load static %}
+
 {% if message %}
 	{{ message }}
 {% else %}
@@ -7,9 +9,8 @@
 			<div class="pattern">
 				<div class="overlay item-title" style="background-image: url({{ post.image.url }})">
 					<div class="item-title-content">
-
+            <div class="share42init"></div>
 						<h3><a href="{{ post.get_absolute_url }}">{{ post.short }}</a></h3>
-
 						<div class="item-social">
 							<div class="item-comments" title="Количество коментариев">
 								<i class="fa fa-comments"></i>
@@ -18,6 +19,7 @@
 
 
 							<div class="fa fa-share-alt" title="Поделиться в соц. сетях"></div>
+              <div class="share42init"></div>
 
 							<div class="likely likely-custom" data-url="https://{{ host }}{{ post.get_absolute_url }}" data-media="https://{{ host }}{{ post.image.url }}"
 								data-title="{{ post.header }}">

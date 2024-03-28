@@ -3,6 +3,10 @@
 {% load meta_tags %}
 {% load news_tags %}
 {% block title %}{{ post.short }}{% endblock title %}
+{% block og_title %}{{ post.header }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_url %}https://{{ host }}{{ post.get_absolute_url }}{% endblock %}
+{% block og_image %}https://{{ host }}{{ post.image.url }}{% endblock %}
 {% block tags %}
   <meta name="keywords" content="">
   <meta name="description" content="{{ post.header }}">
@@ -28,7 +32,7 @@
 						<h1>{{ post.header }}</h1>
 						<div class="item-social">
 							<div class="item-comments" title="Количество коментариев">
-								<i class="fa fa-comments"></i><a href="http://{{ host }}{{ post.get_absolute_url }}#disqus_thread" class="item-comments-count"></a>
+								<i class="fa fa-comments"></i><a href="https://{{ host }}{{ post.get_absolute_url }}#disqus_thread" class="item-comments-count"></a>
 							</div>
 						</div>
 
