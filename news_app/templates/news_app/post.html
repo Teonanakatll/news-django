@@ -6,6 +6,7 @@
 {% block og_title %}{{ post.header }}{% endblock %}
 {% block og_type %}article{% endblock %}
 {% block og_url %}https://{{ host }}{{ post.get_absolute_url }}{% endblock %}
+<meta name="twitter:card" content="summary_large_image">
 {% block og_image %}https://{{ host }}{{ post.image.url }}{% endblock %}
 {% block tags %}
   <meta name="keywords" content="">
@@ -38,11 +39,11 @@
 
 						<div class="fa fa-share-alt" title="Поделиться в соц. сетях"></div>
 
-						<div class="likely likely-custom" data-image="{{ post.image.url }}" data-media="{{ post.image.url }}"
+						<div class="likely likely-custom" data-url="https://{{ host }}{{ post.get_absolute_url }}" data-media="https://{{ host }}{{ post.image.url }}"
 							data-title="{{ post.header }}">
 							<div class="vkontakte" data-comment="{{ post.category.name }}" title="Поделиться Вконтакте">Вконтакте</div>
 							<div class="facebook" data-hashtag="#{{ post.category.name }}" title="Поделиться в Facebook">Facebook</div>
-							<div class="twitter" data-title="" data-hashtags="{{ post.category.name }}" data-related="GeekTOP.ru" title="Поделиться в Twitter">Twitter</div>
+							<div class="twitter"  data-related="GeekTOP.ru" title="Поделиться в Twitter">Twitter</div>
 						</div>
 
 
