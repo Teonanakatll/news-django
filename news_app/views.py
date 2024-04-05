@@ -32,9 +32,6 @@ def home(request):
     return render(request, 'news_app/home.html', locals())
 
 
-# def paginator_mixin()
-
-
 def category(request, cat_slug):
 
     template = 'news_app/category.html'

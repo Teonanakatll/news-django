@@ -9,7 +9,7 @@
 			<div class="pattern">
 				<div class="overlay item-title" style="background-image: url({{ post.image.url }})">
 					<div class="item-title-content">
-            <div class="share42init"></div>
+
 						<h3><a href="{{ post.get_absolute_url }}">{{ post.short }}</a></h3>
 						<div class="item-social">
 							<div class="item-comments" title="Количество коментариев">
@@ -18,11 +18,11 @@
 							</div>
 
 
-							<div class="fa fa-share-alt" title="Поделиться в соц. сетях"></div>
-              <script src="https://yastatic.net/share2/share.js"></script>
-              <div class="ya-share2" data-curtain data-shape="round"
-                   data-url="https://{{ host }}{{ post.get_absolute_url }}"
-                   data-services="vkontakte,odnoklassniki,twitter"></div>
+{#							<div class="fa fa-share-alt" title="Поделиться в соц. сетях"></div>#}
+{#              <script src="https://yastatic.net/share2/share.js"></script>#}
+{#              <div class="ya-share2" data-curtain data-shape="round"#}
+{#                   data-url="https://{{ host }}{{ post.get_absolute_url }}"#}
+{#                   data-services="vkontakte,odnoklassniki,twitter"></div>#}
 
 							<div class="likely likely-custom" data-url="https://{{ host }}{{ post.get_absolute_url }}"
 								data-title="{{ post.header }}">

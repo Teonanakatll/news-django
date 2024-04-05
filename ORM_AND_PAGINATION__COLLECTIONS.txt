@@ -1,3 +1,7 @@
+ncu
+ncu -a
+npm i
+
 python manage.py shell
 friom news_app.models import *
 
