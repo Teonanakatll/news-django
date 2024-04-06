@@ -39,7 +39,7 @@
 
 						<div class="fa fa-share-alt" title="Поделиться в соц. сетях"></div>
 
-						<div class="likely likely-custom" data-url="https://{{ host }}{{ post.get_absolute_url }}" data-media="https://{{ host }}{{ post.image.url }}"
+						<div class="likely likely-custom" data-url="https://{{ host }}{{ post.get_absolute_url }}"
 							data-title="{{ post.header }}">
 							<div class="vkontakte" data-comment="{{ post.category.name }}" title="Поделиться Вконтакте">Вконтакте</div>
 							<div class="facebook" data-hashtag="#{{ post.category.name }}" title="Поделиться в Facebook">Facebook</div>
@@ -86,8 +86,8 @@
 
 
 						<div class="likely-on-page">
-							<div class="likely likely-dark-theme" data-media="http://{{ host }}{{ post.image.url }}"
-							 data-image="http://{{ host }}{{ post.image.url }}" data-title="{{ post.header }}">
+							<div class="likely likely-dark-theme"
+							  data-title="{{ post.header }}">
 								<div class="vkontakte" role="link" data-url="" title="Поделиться Вконтакте">Вконтакте</div>
 								<div class="facebook" title="Поделиться в Facebook">Facebook</div>
 								<div class="twitter" data-hashtags="{{ post.category.name }}" title="Поделиться в Twitter">Twitter</div>
